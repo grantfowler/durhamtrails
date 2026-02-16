@@ -1,14 +1,11 @@
 name: Durham Division
 slug: durham-division
 parent: duke-forest
-description: >
-  North of Erwin Road, adjacent to the Korstian Division. More remote
+description: 'North of Erwin Road, adjacent to the Korstian Division. More remote
   feel with longer fire road loops.
-center: [36.001, -78.976]
+
+  '
+center:
+- 36.001
+- -78.976
 defaultZoom: 14
-trailheads:
-  - name: Gate 25 (Mt Sinai Rd)
-    lat: 36.0012
-    lng: -78.9756
-    parking: true
-    notes: Roadside parking at gate

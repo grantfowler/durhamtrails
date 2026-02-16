@@ -1,14 +1,11 @@
 name: Johnston Mill Nature Preserve
 slug: johnston-mill
 parent: new-hope-creek
-description: >
-  One of the most popular TLC preserves. Features old-growth forest
-  remnants and the ruins of Johnston Mill along New Hope Creek.
-center: [35.934, -78.998]
+description: 'One of the most popular TLC preserves. Features old-growth forest remnants
+  and the ruins of Johnston Mill along New Hope Creek.
+
+  '
+center:
+- 35.934
+- -78.998
 defaultZoom: 15
-trailheads:
-  - name: Johnston Mill Parking
-    lat: 35.9342
-    lng: -78.9978
-    parking: true
-    notes: Off Erwin Rd

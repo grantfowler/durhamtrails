@@ -29,24 +29,33 @@ Areas are flat — hierarchy comes from the `parent` field. This allows arbitrar
 
 Each area gets its own page, its own history, its own map view.
 
+Areas can also represent **access points** (parking lots, trailheads, boat launches).
+An access point is just an area with `type: access` and extra fields for address,
+hours, fees, etc. This means "Cole Mill Road Parking" is a child of "Cole Mill"
+with its own page, map pin, and linked trails.
+
 ```yaml
 name: string                    # Display name
 slug: string                    # URL-safe identifier (matches filename)
 parent: string                  # Optional. Slug of parent area. Null/omitted = top-level.
+type: enum                      # region | park | section | access (default: section)
 description: string             # Brief overview
-bounds:                         # Map bounding box [sw, ne]
+bounds:                         # Map bounding box [sw, ne] (not needed for access points)
   - [lat, lng]
   - [lat, lng]
-center: [lat, lng]              # Default map center
+center: [lat, lng]              # Default map center (or location for access points)
 defaultZoom: number             # Default zoom level
 operator: string                # Managing entity (optional)
 history: string                 # Optional deeper history
-trailheads:                     # Parking/access points for this area
-  - name: string
-    lat: number
-    lng: number
-    parking: boolean
-    notes: string
+
+# Access point fields (only when type: access)
+address: string                 # Street address
+hours: string                   # Gate hours, e.g. "8am–sunset" or "24/7"
+fee: string                     # Parking fee info, e.g. "Free" or "$6/vehicle"
+parking_spaces: number          # Approximate capacity (optional)
+restrooms: boolean              # Has restrooms?
+access_type: enum               # parking | trailhead | boat-launch | roadside
+notes: string                   # Seasonal closures, gate codes, overflow tips
 ```
 
 ## Trail Schema

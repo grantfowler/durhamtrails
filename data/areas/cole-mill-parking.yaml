@@ -1,0 +1,15 @@
+name: Old Cole Mill Road Parking
+slug: cole-mill-parking
+parent: cole-mill
+type: access
+access_type: parking
+description: >
+  Main parking area for Cole Mill trails. At the end of Old Cole Mill Road
+  where it meets the Umstead Rd / Cole Mill Rd stoplight.
+center: [36.0558, -78.9528]
+address: Old Cole Mill Rd, Durham, NC 27705
+hours: 8am–sunset
+fee: Free
+parking_spaces: 30
+restrooms: false
+notes: Fills up fast on weekends. Overflow parking along the road shoulder.
