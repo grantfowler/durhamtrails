@@ -6,4 +6,4 @@ description: >
   Located west of Hillsborough in Orange County. Less visited,
   longer trails, more solitude.
 center: [36.02, -79.10]
-defaultZoom: 14
+default_zoom: 14

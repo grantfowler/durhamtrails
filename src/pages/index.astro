@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getTopLevelAreas, getTrails, getTrailsForArea, getChildAreas } from '../lib/data';
+
+const topAreas = getTopLevelAreas();
+const trails = getTrails();
+const totalMiles = trails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
+---
+
+<BaseLayout title="Hiking Trails In and Around Durham, NC" fullWidth>
+  <!-- Hero with map background -->
+  <section class="relative bg-forest-800 text-white">
+    <div id="hero-map" class="absolute inset-0 opacity-30"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 py-20 text-center">
+      <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Durham Trails</h1>
+      <p class="text-xl text-forest-200 mb-8 max-w-2xl mx-auto">
+        Hiking trails, trail maps, and points of interest in and around Durham, North Carolina.
+        From the Eno River to Duke Forest to the greenways that connect them.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/map" class="bg-forest-500 hover:bg-forest-400 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+          Explore the Map
+        </a>
+        <a href="/areas" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20">
+          Browse by Area
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Area cards -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <h2 class="font-display text-2xl font-bold text-stone-800 mb-6">Trail Areas</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {topAreas.map(area => {
+        const areaTrails = getTrailsForArea(area.slug);
+        const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
+        const totalMiles = areaTrails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
+        return (
+          <a href={`/areas/${area.slug}`} class="group bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:shadow-md hover:border-forest-300 transition-all">
+            <h3 class="font-display text-lg font-bold text-stone-800 group-hover:text-forest-700 transition-colors">{area.name}</h3>
+            <p class="text-stone-600 text-sm mt-2 line-clamp-2">{area.description}</p>
+            <div class="flex items-center gap-4 mt-4 text-xs text-stone-500">
+              {areaTrails.length > 0 && <span>{areaTrails.length} trails</span>}
+              {totalMiles > 0 && <span>{totalMiles.toFixed(1)} mi</span>}
+              {children.length > 0 && <span>{children.length} sections</span>}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Quick stats -->
+  <section class="bg-forest-800 text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-3xl font-bold text-forest-300">{topAreas.length}</div>
+        <div class="text-sm text-forest-400 mt-1">Trail Areas</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-forest-300">{trails.length}</div>
+        <div class="text-sm text-forest-400 mt-1">Trails</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-forest-300">{totalMiles.toFixed(0)}</div>
+        <div class="text-sm text-forest-400 mt-1">Total Miles</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-forest-300">5</div>
+        <div class="text-sm text-forest-400 mt-1">Park Systems</div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mapEl = document.getElementById('hero-map');
+    if (!mapEl || typeof L === 'undefined') return;
+    const map = L.map(mapEl, { 
+      zoomControl: false, attributionControl: false,
+      dragging: false, scrollWheelZoom: false,
+      doubleClickZoom: false, touchZoom: false,
+    }).setView([36.0, -78.94], 12);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+    }).addTo(map);
+  });
+</script>

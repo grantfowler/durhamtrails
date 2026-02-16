@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getTopLevelAreas, getTrails, getPOIs, getChildAreas, getTrailsForArea } from '../lib/data';
+
+const topAreas = getTopLevelAreas();
+const trails = getTrails();
+const pois = getPOIs();
+
+// Build area tree for sidebar
+const areaTree = topAreas.map(area => ({
+  ...area,
+  children: getChildAreas(area.slug).filter(a => a.type !== 'access'),
+  trailCount: getTrailsForArea(area.slug).length,
+}));
+---
+
+<BaseLayout title="Trail Map" fullWidth>
+  <div class="h-[calc(100vh-56px)] flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="
+      w-full md:w-[360px] bg-white border-r border-stone-200
+      flex flex-col order-2 md:order-1
+      max-h-[40vh] md:max-h-full overflow-hidden z-[500] relative
+    ">
+      <div class="p-4 border-b border-stone-200 flex-shrink-0">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input id="search" type="text" aria-label="Search trails and areas" placeholder="Search trails, areas..." 
+            class="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-transparent" />
+        </div>
+        <div class="flex gap-2 mt-3 flex-wrap">
+          <button data-filter="all" class="filter-btn active px-3 py-1 text-xs rounded-full bg-forest-600 text-white">All</button>
+          <button data-filter="official" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Official</button>
+          <button data-filter="greenway" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Greenway</button>
+          <button data-filter="fire-road" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Fire Road</button>
+        </div>
+      </div>
+
+      <div id="results-list" class="flex-1 overflow-y-auto">
+        {areaTree.map(area => (
+          <div class="area-group" data-area={area.slug}>
+            <button class="area-header w-full text-left px-4 py-3 bg-stone-50 border-b border-stone-200 hover:bg-stone-100 transition-colors flex items-center justify-between"
+                    data-center={JSON.stringify(area.center)} data-zoom={area.default_zoom || 13}>
+              <div>
+                <div class="font-medium text-stone-800 text-sm">{area.name}</div>
+                <div class="text-xs text-stone-500">{area.trailCount} trails</div>
+              </div>
+              <svg class="w-4 h-4 text-stone-400 area-chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <div class="area-trails hidden">
+              {trails.filter(t => t.areas?.some(a => a === area.slug || area.children?.some(c => c.slug === a))).map(trail => (
+                <a href={`/trails/${trail.slug}`}
+                   class="trail-item w-full text-left px-4 py-2.5 border-b border-stone-100 hover:bg-forest-50 transition-colors flex items-center gap-3 block"
+                   data-trail={trail.slug} data-type={trail.type}>
+                  <span class={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    trail.type === 'official' ? 'bg-forest-600' :
+                    trail.type === 'greenway' ? 'bg-forest-400' :
+                    trail.type === 'fire-road' ? 'bg-trail-700' :
+                    'bg-forest-300'
+                  }`}></span>
+                  <div class="min-w-0">
+                    <div class="text-sm text-stone-800 truncate">{trail.name}</div>
+                    <div class="text-xs text-stone-500">
+                      {trail.distance_miles ? `${trail.distance_miles} mi · ` : ''}{trail.difficulty || 'unknown'} · {trail.loop ? 'loop' : 'out & back'}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </aside>
+
+    <!-- Map -->
+    <div id="map" class="flex-1 order-1 md:order-2 min-h-[60vh] md:min-h-0 z-[100]"></div>
+  </div>
+</BaseLayout>
+
+<script is:inline define:vars={{ pois }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof L === 'undefined') return;
+
+    const map = L.map('map', { zoomControl: true }).setView([36.0, -78.94], 12);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
+    }).addTo(map);
+
+    const poiIcons = {
+      historic: '🏛️', natural: '🌿', bridge: '🌉',
+      campsite: '⛺', overlook: '👁️', ruins: '🧱', water: '💧', sign: '📋',
+    };
+
+    pois.forEach(poi => {
+      const icon = L.divIcon({
+        html: `<span class="text-lg">${poiIcons[poi.type] || '📍'}</span>`,
+        className: 'poi-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+      });
+      const marker = L.marker([poi.lat, poi.lng], { icon }).addTo(map);
+      marker.bindTooltip(poi.name, { direction: 'top', offset: [0, -8] });
+    });
+
+    // Area expand/collapse + map pan
+    document.querySelectorAll('.area-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const group = header.closest('.area-group');
+        const trailsDiv = group.querySelector('.area-trails');
+        const chevron = header.querySelector('.area-chevron');
+        trailsDiv.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-90');
+        try {
+          const center = JSON.parse(header.dataset.center);
+          const zoom = parseInt(header.dataset.zoom);
+          if (center) map.flyTo(center, zoom);
+        } catch(e) {}
+      });
+    });
+
+    // Search
+    document.getElementById('search').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.area-group').forEach(group => {
+        const areaName = group.querySelector('.font-medium').textContent.toLowerCase();
+        const items = group.querySelectorAll('.trail-item');
+        let anyMatch = false;
+        items.forEach(item => {
+          const name = item.querySelector('.text-sm').textContent.toLowerCase();
+          const match = !q || name.includes(q) || areaName.includes(q);
+          item.style.display = match ? '' : 'none';
+          if (match && q) anyMatch = true;
+        });
+        group.style.display = (!q || areaName.includes(q) || anyMatch) ? '' : 'none';
+        if (q && anyMatch) {
+          group.querySelector('.area-trails').classList.remove('hidden');
+          group.querySelector('.area-chevron').classList.add('rotate-90');
+        }
+      });
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-forest-600', 'text-white');
+          b.classList.add('bg-stone-100', 'text-stone-600');
+        });
+        btn.classList.add('active', 'bg-forest-600', 'text-white');
+        btn.classList.remove('bg-stone-100', 'text-stone-600');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.trail-item').forEach(item => {
+          item.style.display = (filter === 'all' || item.dataset.type === filter) ? '' : 'none';
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .poi-marker { background: none !important; border: none !important; }
+</style>

@@ -10,5 +10,5 @@ description: 'Technically a separate state natural area in Hillsborough. The hig
 center:
 - 36.064
 - -79.1
-defaultZoom: 15
+default_zoom: 15
 operator: NC Division of Parks and Recreation

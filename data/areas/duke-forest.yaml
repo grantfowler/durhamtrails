@@ -9,5 +9,5 @@ bounds:
   - [35.93, -79.05]
   - [36.05, -78.90]
 center: [35.99, -78.97]
-defaultZoom: 13
+default_zoom: 13
 operator: Duke University

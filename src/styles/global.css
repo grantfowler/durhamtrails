@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet overrides */
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* Trail line styles */
+.trail-official { stroke: #358538; stroke-width: 3; }
+.trail-unofficial { stroke: #8a7f56; stroke-width: 2; stroke-dasharray: 8 4; }
+.trail-greenway { stroke: #46a34a; stroke-width: 4; }
+.trail-fire-road { stroke: #726845; stroke-width: 2; stroke-dasharray: 4 4; }
+.trail-connector { stroke: #9dd89f; stroke-width: 1.5; stroke-dasharray: 6 3; }

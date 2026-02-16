@@ -9,4 +9,4 @@ description: 'Eastern section accessed from Guess Road or Rivermont Road. Featur
 center:
 - 36.046
 - -78.924
-defaultZoom: 15
+default_zoom: 15

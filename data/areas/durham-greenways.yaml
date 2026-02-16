@@ -9,5 +9,5 @@ bounds:
   - [35.88, -78.95]
   - [36.05, -78.85]
 center: [35.97, -78.90]
-defaultZoom: 12
+default_zoom: 12
 operator: Durham Parks and Recreation

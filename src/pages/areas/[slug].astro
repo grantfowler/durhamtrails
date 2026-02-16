@@ -1,0 +1,244 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTrailAreas, getArea, getTrailsForArea, getPOIsForArea, getChildAreas, getAccessPoints, getBreadcrumbs } from '../../lib/data';
+
+export function getStaticPaths() {
+  return getTrailAreas().map(area => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+const { area } = Astro.props;
+const trails = getTrailsForArea(area.slug);
+const pois = getPOIsForArea(area.slug);
+const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
+const accessPoints = getAccessPoints(area.slug);
+const breadcrumbs = getBreadcrumbs(area);
+
+// Group trails by their most specific area within this area's tree
+const directTrails = trails.filter(t => t.areas?.includes(area.slug));
+const childTrailGroups = children.map(child => ({
+  area: child,
+  trails: trails.filter(t => t.areas?.includes(child.slug)),
+})).filter(g => g.trails.length > 0);
+
+const typeColors: Record<string, string> = {
+  official: 'bg-forest-100 text-forest-800',
+  unofficial: 'bg-trail-100 text-trail-800',
+  greenway: 'bg-green-100 text-green-800',
+  'fire-road': 'bg-amber-100 text-amber-800',
+  connector: 'bg-stone-100 text-stone-600',
+};
+
+const difficultyColors: Record<string, string> = {
+  easy: 'text-green-600',
+  moderate: 'text-amber-600',
+  difficult: 'text-red-600',
+};
+---
+
+<BaseLayout title={area.name}>
+  <!-- Breadcrumbs -->
+  <nav class="text-sm text-stone-500 mb-4">
+    <a href="/areas" class="hover:text-forest-700">Areas</a>
+    {breadcrumbs.map(crumb => (
+      <>
+        <span class="mx-1">›</span>
+        <a href={`/areas/${crumb.slug}`} class="hover:text-forest-700">{crumb.name}</a>
+      </>
+    ))}
+    <span class="mx-1">›</span>
+    <span class="text-stone-800">{area.name}</span>
+  </nav>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main content -->
+    <div class="lg:col-span-2">
+      <h1 class="font-display text-3xl font-bold text-stone-800 mb-2">{area.name}</h1>
+      {area.operator && <p class="text-sm text-stone-500 mb-4">Managed by {area.operator}</p>}
+      <p class="text-stone-700 leading-relaxed mb-8">{area.description}</p>
+
+      <!-- Area map -->
+      {area.center && (
+        <div id="area-map" class="w-full h-64 rounded-xl border border-stone-200 mb-8 z-0"
+             data-center={JSON.stringify(area.center)} data-zoom={area.default_zoom || 14}></div>
+      )}
+
+      <!-- Child areas as navigation cards -->
+      {children.length > 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Sections</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {children.map(child => {
+              const childTrails = trails.filter(t => t.areas?.includes(child.slug));
+              return (
+                <a href={`/areas/${child.slug}`} class="group bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                  <h3 class="font-medium text-stone-800 group-hover:text-forest-700">{child.name}</h3>
+                  <p class="text-stone-500 text-xs mt-1 line-clamp-2">{child.description}</p>
+                  <div class="text-xs text-stone-400 mt-2">{childTrails.length} trails</div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <!-- Access points -->
+      {accessPoints.length > 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Parking & Access</h2>
+          <div class="space-y-3">
+            {accessPoints.map(ap => (
+              <div class="bg-white border border-stone-200 rounded-lg p-4">
+                <div class="flex items-start gap-2">
+                  <span class="text-lg">🅿️</span>
+                  <div>
+                    <h3 class="font-medium text-stone-800">{ap.name}</h3>
+                    {ap.address && <p class="text-sm text-stone-500">{ap.address}</p>}
+                    <div class="flex gap-4 mt-1 text-xs text-stone-500">
+                      {ap.hours && <span>Hours: {ap.hours}</span>}
+                      {ap.fee && <span>Fee: {ap.fee}</span>}
+                      {ap.parking_spaces && <span>~{ap.parking_spaces} spaces</span>}
+                      {ap.restrooms && <span>🚻 Restrooms</span>}
+                    </div>
+                    {ap.notes && <p class="text-xs text-stone-400 mt-1">{ap.notes}</p>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Trails grouped by child area -->
+      {childTrailGroups.map(({ area: child, trails: childTrails }) => (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-1">
+            <a href={`/areas/${child.slug}`} class="hover:text-forest-700">{child.name}</a>
+          </h2>
+          <p class="text-stone-600 text-sm mb-4">{child.description}</p>
+          <div class="space-y-2">
+            {childTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-medium text-stone-800">{trail.name}</h3>
+                    <div class="flex items-center gap-3 mt-1 text-xs text-stone-500">
+                      <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
+                      {trail.distance_miles && <span>{trail.distance_miles} mi</span>}
+                      {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
+                      <span>{trail.loop ? 'loop' : 'out & back'}</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Direct trails (not in a child area) -->
+      {directTrails.length > 0 && children.length > 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Other Trails</h2>
+          <div class="space-y-2">
+            {directTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                <h3 class="font-medium text-stone-800">{trail.name}</h3>
+                <p class="text-sm text-stone-600 mt-1 line-clamp-2">{trail.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+      {directTrails.length > 0 && children.length === 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Trails</h2>
+          <div class="space-y-2">
+            {directTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                <div>
+                  <h3 class="font-medium text-stone-800">{trail.name}</h3>
+                  <div class="flex items-center gap-3 mt-1 text-xs text-stone-500">
+                    <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
+                    {trail.distance_miles && <span>{trail.distance_miles} mi</span>}
+                    {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
+                    <span>{trail.loop ? 'loop' : 'out & back'}</span>
+                  </div>
+                </div>
+                <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <div class="bg-white border border-stone-200 rounded-xl p-5">
+        <h3 class="font-display font-bold text-stone-800 mb-3">At a Glance</h3>
+        <dl class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <dt class="text-stone-500">Trails</dt>
+            <dd class="font-medium text-stone-800">{trails.length}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-stone-500">Total Miles</dt>
+            <dd class="font-medium text-stone-800">{trails.reduce((s, t) => s + (t.distance_miles || 0), 0).toFixed(1)}</dd>
+          </div>
+          {children.length > 0 && (
+            <div class="flex justify-between">
+              <dt class="text-stone-500">Sections</dt>
+              <dd class="font-medium text-stone-800">{children.length}</dd>
+            </div>
+          )}
+          {pois.length > 0 && (
+            <div class="flex justify-between">
+              <dt class="text-stone-500">Points of Interest</dt>
+              <dd class="font-medium text-stone-800">{pois.length}</dd>
+            </div>
+          )}
+        </dl>
+      </div>
+
+      {pois.length > 0 && (
+        <div class="bg-white border border-stone-200 rounded-xl p-5">
+          <h3 class="font-display font-bold text-stone-800 mb-3">Points of Interest</h3>
+          <div class="space-y-3">
+            {pois.map(poi => (
+              <div class="text-sm">
+                <div class="font-medium text-stone-800">{poi.name}</div>
+                <div class="text-stone-500 text-xs">{poi.type}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {area.history && (
+        <div class="bg-trail-50 border border-trail-200 rounded-xl p-5">
+          <h3 class="font-display font-bold text-trail-800 mb-2">History</h3>
+          <p class="text-sm text-trail-700">{area.history}</p>
+        </div>
+      )}
+
+      <a href="/map" class="block text-center bg-forest-600 hover:bg-forest-500 text-white rounded-lg py-2.5 text-sm font-medium transition-colors">
+        View on Map →
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mapEl = document.getElementById('area-map');
+    if (!mapEl || typeof L === 'undefined') return;
+    const center = JSON.parse(mapEl.dataset.center);
+    const zoom = parseInt(mapEl.dataset.zoom);
+    const map = L.map(mapEl).setView(center, zoom);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: '© OpenStreetMap contributors',
+    }).addTo(map);
+  });
+</script>

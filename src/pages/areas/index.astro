@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTopLevelAreas, getTrailsForArea, getChildAreas } from '../../lib/data';
+
+const areas = getTopLevelAreas();
+---
+
+<BaseLayout title="Trail Areas">
+  <h1 class="font-display text-3xl font-bold text-stone-800 mb-2">Trail Areas</h1>
+  <p class="text-stone-600 mb-8">Browse trails by area — from state parks to urban greenways.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {areas.map(area => {
+      const areaTrails = getTrailsForArea(area.slug);
+      const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
+      const totalMiles = areaTrails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
+      return (
+        <a href={`/areas/${area.slug}`} class="group bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:shadow-md hover:border-forest-300 transition-all">
+          <h2 class="font-display text-xl font-bold text-stone-800 group-hover:text-forest-700 transition-colors">{area.name}</h2>
+          <p class="text-stone-600 text-sm mt-2">{area.description}</p>
+          {area.operator && <p class="text-xs text-stone-400 mt-3">Managed by {area.operator}</p>}
+          <div class="flex items-center gap-4 mt-4 text-xs text-stone-500 border-t border-stone-100 pt-3">
+            <span>{areaTrails.length} trails</span>
+            {totalMiles > 0 && <span>{totalMiles.toFixed(1)} miles</span>}
+            {children.length > 0 && <span>{children.length} sections</span>}
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</BaseLayout>

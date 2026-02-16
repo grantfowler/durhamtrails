@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  fullWidth?: boolean;
+}
+
+const { title, description = 'Hiking trails and trail maps in and around Durham, NC', fullWidth = false } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} | Durham Trails</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body class="bg-trail-50 text-stone-800 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-forest-800 text-white shadow-md relative z-[1000]">
+    <nav class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <svg class="w-6 h-6 text-forest-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21l6-6m0 0l3-9 3 9m-6 0h6m-9 6h12" />
+        </svg>
+        <span class="font-display text-lg font-bold tracking-wide">Durham Trails</span>
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/map" class="text-forest-200 hover:text-white transition-colors">Map</a>
+        <a href="/areas" class="text-forest-200 hover:text-white transition-colors">Areas</a>
+        <a href="/trails" class="text-forest-200 hover:text-white transition-colors">Trails</a>
+        <a href="/about" class="text-forest-200 hover:text-white transition-colors">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Content -->
+  <main class={fullWidth ? 'flex-1' : 'flex-1 max-w-7xl mx-auto px-4 py-8 w-full'}>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-forest-900 text-forest-300 text-sm py-6">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© {new Date().getFullYear()} Durham Trails</p>
+      <p>Trail data from <a href="https://www.openstreetmap.org" class="underline hover:text-white">OpenStreetMap</a> contributors</p>
+    </div>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>
