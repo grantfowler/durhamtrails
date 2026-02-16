@@ -25,18 +25,19 @@ const difficultyColors: Record<string, string> = {
   <p class="text-stone-600 mb-6">{trails.length} trails, {trails.reduce((s, t) => s + (t.distance_miles || 0), 0).toFixed(1)} total miles</p>
 
   <div class="flex flex-wrap gap-3 mb-6 items-center">
-    <select id="area-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+    <select id="area-filter" aria-label="Filter by area" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
       <option value="">All Areas</option>
       {areas.map(a => <option value={a.slug}>{a.name}</option>)}
     </select>
-    <select id="type-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+    <select id="type-filter" aria-label="Filter by trail type" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
       <option value="">All Types</option>
       <option value="official">Official</option>
       <option value="unofficial">Unofficial</option>
       <option value="greenway">Greenway</option>
       <option value="fire-road">Fire Road</option>
+      <option value="connector">Connector</option>
     </select>
-    <select id="difficulty-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+    <select id="difficulty-filter" aria-label="Filter by difficulty" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
       <option value="">All Difficulties</option>
       <option value="easy">Easy</option>
       <option value="moderate">Moderate</option>
@@ -45,7 +46,7 @@ const difficultyColors: Record<string, string> = {
   </div>
 
   <div id="trail-list" class="space-y-3">
-    {trails.sort((a, b) => a.name.localeCompare(b.name)).map(trail => {
+    {[...trails].sort((a, b) => a.name.localeCompare(b.name)).map(trail => {
       const area = trail.areas?.[0] ? getArea(trail.areas[0]) : null;
       return (
         <a href={`/trails/${trail.slug}`}

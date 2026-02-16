@@ -8,5 +8,5 @@ bounds:
   - [35.97, -79.05]
   - [36.08, -78.88]
 center: [36.04, -78.95]
-defaultZoom: 13
+default_zoom: 13
 operator: NC Division of Parks and Recreation

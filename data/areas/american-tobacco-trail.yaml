@@ -1,5 +1,5 @@
 name: American Tobacco Trail
-slug: att
+slug: american-tobacco-trail
 parents:
   - durham-greenways
 description: '22-mile rail-trail from downtown Durham to the Chatham County line,
@@ -10,4 +10,4 @@ description: '22-mile rail-trail from downtown Durham to the Chatham County line
 center:
 - 35.96
 - -78.91
-defaultZoom: 12
+default_zoom: 12

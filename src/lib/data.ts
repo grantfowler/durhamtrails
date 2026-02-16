@@ -147,17 +147,30 @@ export function getChildAreas(parentSlug: string): Area[] {
   return getAreas().filter(a => a.parents?.includes(parentSlug));
 }
 
-/** Get trails belonging to an area (direct or via child areas) */
+/** Get all descendant area slugs recursively */
+export function getDescendantSlugs(areaSlug: string): string[] {
+  const slugs: string[] = [];
+  const queue = [areaSlug];
+  const seen = new Set<string>();
+  while (queue.length) {
+    const current = queue.shift()!;
+    if (seen.has(current)) continue;
+    seen.add(current);
+    slugs.push(current);
+    getChildAreas(current).forEach(child => queue.push(child.slug));
+  }
+  return slugs;
+}
+
+/** Get trails belonging to an area (including all descendants) */
 export function getTrailsForArea(areaSlug: string): Trail[] {
-  const childSlugs = getChildAreas(areaSlug).map(a => a.slug);
-  const allSlugs = [areaSlug, ...childSlugs];
+  const allSlugs = getDescendantSlugs(areaSlug);
   return getTrails().filter(t => t.areas?.some(a => allSlugs.includes(a)));
 }
 
-/** Get POIs belonging to an area */
+/** Get POIs belonging to an area (including all descendants) */
 export function getPOIsForArea(areaSlug: string): POI[] {
-  const childSlugs = getChildAreas(areaSlug).map(a => a.slug);
-  const allSlugs = [areaSlug, ...childSlugs];
+  const allSlugs = getDescendantSlugs(areaSlug);
   return getPOIs().filter(p => p.areas?.some(a => allSlugs.includes(a)));
 }
 

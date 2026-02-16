@@ -10,4 +10,4 @@ description: 'Popular riverside trails with access to Bobbitt Hole swimming area
 center:
 - 36.056
 - -78.953
-defaultZoom: 15
+default_zoom: 15

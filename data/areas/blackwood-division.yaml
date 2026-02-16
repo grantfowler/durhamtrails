@@ -5,4 +5,4 @@ parents:
 description: >
   Southern division near Jordan Lake. Remote and less trafficked.
 center: [35.93, -79.02]
-defaultZoom: 14
+default_zoom: 14

@@ -9,5 +9,5 @@ bounds:
   - [35.88, -79.05]
   - [35.98, -78.92]
 center: [35.93, -78.98]
-defaultZoom: 13
+default_zoom: 13
 operator: Triangle Land Conservancy / Durham County
