@@ -1,0 +1,12 @@
+name: Durham Division
+slug: durham-division
+parents:
+  - duke-forest
+description: 'North of Erwin Road, adjacent to the Korstian Division. More remote
+  feel with longer fire road loops.
+
+  '
+center:
+- 36.001
+- -78.976
+defaultZoom: 14

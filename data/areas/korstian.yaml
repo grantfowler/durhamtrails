@@ -1,0 +1,12 @@
+name: Korstian Division
+slug: korstian
+parents:
+  - duke-forest
+description: 'The most accessible division, bordered by Erwin Road and NC 751. Dense
+  network of fire roads and named trails. Popular with Duke students and local runners.
+
+  '
+center:
+- 35.976
+- -78.983
+defaultZoom: 14

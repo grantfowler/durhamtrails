@@ -1,26 +1,22 @@
 name: Buckquarter Creek Trail
 slug: buckquarter-creek-trail
-area: eno-river
-subarea: cox-mountain
-type: official
-difficulty: moderate
-blaze: blue
-distance_miles: 1.5
+areas: [cox-mountain, eno-river]
+
+segments:
+  - cox-mtn-approach        # SHARED with Cox Mountain Trail
+  - buckquarter-creek-main
 loop: false
-osmRelationId: 17591486
+
+type: official
+difficulty: easy
+blaze: orange circle
+
+distance_miles: 1.4
+elevation_gain_ft: 270
 
 description: >
-  Follows the ridge above the Eno River from Few's Ford, then drops
-  down along Buckquarter Creek. An old roadbed section gives way to
-  narrower trail. Connects to Ridge Trail, Knight Trail, and Shakori
-  Trail for longer loops.
+  Easy creek-side trail branching off the Cox Mountain approach. Follows
+  Buckquarter Creek east through bottomland hardwoods. Shares the first
+  0.4 miles with Cox Mountain Trail before splitting at the junction.
 
-connections:
-  - trail: ridge-trail
-    at: Junction on ridgeline
-  - trail: knight-trail
-    at: Buckquarter Creek footbridge area
-  - trail: shakori-trail
-    at: Buckquarter Creek footbridge area
-  - trail: holden-mill-trail
-    at: Footbridge at Buckquarter Creek
+osm_relation_id: 2424749

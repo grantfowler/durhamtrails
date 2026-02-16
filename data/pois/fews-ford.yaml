@@ -1,7 +1,8 @@
 name: Few's Ford
 slug: fews-ford
-area: eno-river
-subarea: fews-ford
+areas:
+  - eno-river
+  - fews-ford
 lat: 36.0678
 lng: -78.9625
 type: historic

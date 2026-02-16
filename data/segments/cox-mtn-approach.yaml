@@ -1,0 +1,14 @@
+slug: cox-mtn-approach
+from: cox-mtn-trailhead
+to: cox-mtn-buckquarter-jct
+areas: [cox-mountain]
+
+distance_ft: 2112
+elevation_gain_ft: 120
+surface: singletrack
+difficulty: easy
+blaze: red
+
+geometry: cox-mtn-approach.geojson
+source: osm
+osm_way_ids: [123456789]

@@ -1,7 +1,8 @@
 name: Holden Mill Ruins
 slug: holden-mill-ruins
-area: eno-river
-subarea: cox-mountain
+areas:
+  - eno-river
+  - cox-mountain
 lat: 36.0745
 lng: -78.9589
 type: ruins
