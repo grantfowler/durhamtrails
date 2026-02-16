@@ -89,16 +89,20 @@ Segments are the **atomic building blocks** of all trail geometry. A segment run
 between exactly two junctions (or a junction and a dead end). Segments have no
 inherent direction — trails define the order.
 
+Segments are ordered within their trail files — the `segments` array in a trail
+definition determines sequence. No separate ordering field needed.
+
 ```yaml
 slug: string                    # Unique identifier (matches filename)
+name: string                    # Optional. Most segments don't need a display name.
 from: string                    # Junction slug (start node)
 to: string                      # Junction slug (end node)
 areas: [string]                 # Area slugs (inherited from trails, but explicit for querying)
 
-# Physical properties
+# Physical properties (all optional until geometry available)
 distance_ft: number             # Length in feet (computed from geometry, cached)
-elevation_gain_ft: number       # Net gain from→to (optional)
-elevation_loss_ft: number       # Net loss from→to (optional)
+elevation_gain_ft: number       # Net gain from→to
+elevation_loss_ft: number       # Net loss from→to
 surface: enum                   # singletrack | doubletrack | paved | gravel | boardwalk | rock
 difficulty: enum                # easy | moderate | difficult
 blaze: string                   # Trail blaze color/shape if any
@@ -118,12 +122,13 @@ in the trail graph. A junction with only one segment is a trailhead or dead end.
 
 ```yaml
 slug: string                    # Unique identifier (matches filename)
-name: string                    # Human-readable name, e.g. "Cox Mountain / Buckquarter Creek Junction"
-lat: number
-lng: number
+name: string                    # Optional. Only for notable/named junctions shown to users.
+lat: number                     # Optional until GPS data available
+lng: number                     # Optional until GPS data available
 areas: [string]                 # Area slugs
 elevation_ft: number            # Elevation at junction (optional)
-description: string             # Optional, e.g. "Sign post marks the split. Bear left for Cox Mountain summit."
+description: string             # Optional
+visible: boolean                # Show on map/UI? Default false. Only notable junctions need this.
 ```
 
 ## Trail Schema
