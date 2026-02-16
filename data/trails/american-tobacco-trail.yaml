@@ -1,20 +1,20 @@
 name: American Tobacco Trail
 slug: american-tobacco-trail
-areas:
-  - durham-greenways
-  - att
-type: greenway
-difficulty: easy
-distance_miles: 22.0
+areas: [american-tobacco-trail, durham-greenways]
+
+segments: []                    # TODO: add segments when geometry available
 loop: false
 
-description: >
-  Durham's flagship rail-trail, running 22 miles from the Durham Bulls
-  Athletic Park downtown to the Chatham County line. Mostly paved, with
-  a crushed stone section south of I-40. Flat and accessible — great
-  for walking, running, and cycling. Connects to the broader Triangle
-  greenway network.
+type: greenway
+difficulty: easy
 
+distance_miles: 22.0
+elevation_gain_ft: ~
+
+description: >
+  22-mile rail trail running from downtown Durham south to the Chatham
+  County line. Built on a former railroad corridor, the paved multi-use
+  path passes through urban, suburban, and rural landscapes.
 notes: >
-  The unpaved section south of I-40 can be muddy after rain. The I-40
-  crossing uses an at-grade road crossing — use caution.
+  The trail has a gap at I-40 that requires a brief road detour.
+  The southern unpaved section is gravel and can be muddy after rain.
