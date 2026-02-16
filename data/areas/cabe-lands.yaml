@@ -1,6 +1,7 @@
 name: Cabe Lands
 slug: cabe-lands
-parent: eno-river
+parents:
+  - eno-river
 description: 'Accessed from Howe Street off Sparger Road. Short but scenic loop with
   the old quarry and connections to the Mountains-to-Sea Trail.
 

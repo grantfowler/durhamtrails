@@ -1,6 +1,7 @@
 name: Hillsboro Division
 slug: hillsboro-division
-parent: duke-forest
+parents:
+  - duke-forest
 description: >
   Located west of Hillsborough in Orange County. Less visited,
   longer trails, more solitude.

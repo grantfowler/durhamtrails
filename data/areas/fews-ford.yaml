@@ -1,6 +1,7 @@
 name: Few's Ford
 slug: fews-ford
-parent: eno-river
+parents:
+  - eno-river
 description: >
   Central access point with the historic Few's Ford river crossing.
   Gateway to both Cox Mountain (west) and Pump Station (east) sections.

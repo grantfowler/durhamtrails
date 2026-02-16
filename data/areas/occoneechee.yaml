@@ -1,6 +1,7 @@
 name: Occoneechee Mountain
 slug: occoneechee
-parent: eno-river
+parents:
+  - eno-river
 description: 'Technically a separate state natural area in Hillsborough. The highest
   point in Orange County with panoramic views. Home to rare Brown Elfin butterfly
   habitat.

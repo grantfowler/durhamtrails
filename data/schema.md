@@ -7,12 +7,12 @@ All trail data lives in YAML files under `data/`. No database needed.
 ```
 data/
 ├── schema.md              # This file
-├── areas/                 # All areas (flat, with optional parent)
+├── areas/                 # All areas (flat, with parents array)
 │   ├── eno-river.yaml
-│   ├── cox-mountain.yaml       # parent: eno-river
-│   ├── cole-mill.yaml          # parent: eno-river
+│   ├── cox-mountain.yaml       # parents: [eno-river]
+│   ├── cole-mill.yaml          # parents: [eno-river]
 │   ├── duke-forest.yaml
-│   ├── korstian.yaml           # parent: duke-forest
+│   ├── korstian.yaml           # parents: [duke-forest]
 │   └── ...
 ├── trails/                # Individual trail files
 │   ├── cox-mountain-trail.yaml
@@ -24,8 +24,14 @@ data/
 
 ## Area Schema
 
-Areas are flat — hierarchy comes from the `parent` field. This allows arbitrary depth:
-`All > Falls Lake > MST > Red Mill Road Area > ...`
+Areas are flat — hierarchy comes from the `parents` field. This allows arbitrary depth
+and **multiple parent relationships**:
+
+- `All > Eno River > Cox Mountain`
+- `All > Falls Lake > MST > Red Mill Road Area`
+
+An area along the Eno that's also part of Falls Lake and the MST corridor would have
+`parents: [eno-river, falls-lake, mst]`. The **first parent is the default breadcrumb**.
 
 Each area gets its own page, its own history, its own map view.
 
@@ -37,7 +43,7 @@ with its own page, map pin, and linked trails.
 ```yaml
 name: string                    # Display name
 slug: string                    # URL-safe identifier (matches filename)
-parent: string                  # Optional. Slug of parent area. Null/omitted = top-level.
+parents: [string]               # Parent area slugs. First = default breadcrumb. Omit for top-level.
 type: enum                      # region | park | section | access (default: section)
 description: string             # Brief overview
 bounds:                         # Map bounding box [sw, ne] (not needed for access points)

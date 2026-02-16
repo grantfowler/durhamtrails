@@ -1,6 +1,7 @@
 name: Hollow Rock
 slug: hollow-rock
-parent: new-hope-creek
+parents:
+  - new-hope-creek
 description: 'Named for the distinctive rock formation along New Hope Creek. Easy
   access and family-friendly trails.
 

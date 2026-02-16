@@ -1,6 +1,7 @@
 name: Johnston Mill Nature Preserve
 slug: johnston-mill
-parent: new-hope-creek
+parents:
+  - new-hope-creek
 description: 'One of the most popular TLC preserves. Features old-growth forest remnants
   and the ruins of Johnston Mill along New Hope Creek.
 

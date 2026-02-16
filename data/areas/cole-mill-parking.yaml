@@ -1,6 +1,7 @@
 name: Old Cole Mill Road Parking
 slug: cole-mill-parking
-parent: cole-mill
+parents:
+  - cole-mill
 type: access
 access_type: parking
 description: >

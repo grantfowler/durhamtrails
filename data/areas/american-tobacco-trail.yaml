@@ -1,6 +1,7 @@
 name: American Tobacco Trail
 slug: att
-parent: durham-greenways
+parents:
+  - durham-greenways
 description: '22-mile rail-trail from downtown Durham to the Chatham County line,
   following the former Norfolk Southern railroad corridor. Paved in most sections,
   with a crushed stone segment south of I-40.
