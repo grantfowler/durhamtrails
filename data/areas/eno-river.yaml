@@ -1,0 +1,87 @@
+name: Eno River State Park
+slug: eno-river
+description: >
+  The crown jewel of Durham hiking. Over 30 miles of trails winding along
+  the Eno River from Hillsborough to Falls Lake, through gorges, past
+  historic mill ruins, and across some of the most varied terrain in the Piedmont.
+bounds:
+  - [35.97, -79.05]
+  - [36.08, -78.88]
+center: [36.04, -78.95]
+defaultZoom: 13
+operator: NC Division of Parks and Recreation
+
+subareas:
+  - name: Cox Mountain
+    slug: cox-mountain
+    description: >
+      The most rugged section of the park. Home to the challenging Cox Mountain
+      loop and access to backcountry camping via Fanny's Ford Trail. Start from
+      the Cole Mill Road parking areas.
+    trailheads:
+      - name: Cole Mill Loop Parking
+        lat: 36.0712
+        lng: -78.9673
+        parking: true
+        notes: End of Cole Mill Rd, main access to Cox Mountain and Fanny's Ford trails
+      - name: Upper Parking (Ranger Station)
+        lat: 36.0695
+        lng: -78.9651
+        parking: true
+        notes: Just past the ranger station, access to Few's Ford and Buckquarter Creek
+
+  - name: Cole Mill
+    slug: cole-mill
+    description: >
+      Popular riverside trails with access to Bobbitt Hole swimming area.
+      Connects to the Mountains-to-Sea Trail. Good mix of easy riverside
+      walking and moderate ridge trails.
+    trailheads:
+      - name: Old Cole Mill Rd Parking
+        lat: 36.0558
+        lng: -78.9528
+        parking: true
+        notes: End of Old Cole Mill Rd at Umstead Rd/Cole Mill Rd stoplight
+
+  - name: Few's Ford
+    slug: fews-ford
+    description: >
+      Central access point with the historic Few's Ford river crossing.
+      Gateway to both Cox Mountain (west) and Pump Station (east) sections.
+
+  - name: Pump Station
+    slug: pump-station
+    description: >
+      Eastern section accessed from Guess Road or Rivermont Road. Features
+      the old Durham pump station ruins and connects to the Laurel Bluffs area.
+    trailheads:
+      - name: Guess Road Access
+        lat: 36.0456
+        lng: -78.9243
+        parking: true
+        notes: Parking area off Guess Rd
+
+  - name: Cabe Lands
+    slug: cabe-lands
+    description: >
+      Accessed from Howe Street off Sparger Road. Short but scenic loop
+      with the old quarry and connections to the Mountains-to-Sea Trail.
+    trailheads:
+      - name: Howe Street Parking
+        lat: 36.0389
+        lng: -78.9367
+        parking: true
+        notes: Down Howe Street off Sparger Rd, just north of I-85
+
+  - name: Occoneechee Mountain
+    slug: occoneechee
+    description: >
+      Technically a separate state natural area in Hillsborough. The highest
+      point in Orange County with panoramic views. Home to rare Brown Elfin
+      butterfly habitat.
+    trailheads:
+      - name: Occoneechee Mountain Parking
+        lat: 36.0636
+        lng: -79.1002
+        parking: true
+        notes: Off Orange Grove Rd past two fishing lakes

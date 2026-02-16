@@ -1,0 +1,55 @@
+name: Duke Forest
+slug: duke-forest
+description: >
+  Over 7,000 acres of managed research forest spread across six divisions
+  in Durham and Orange counties. A maze of fire roads and gated trails,
+  popular with trail runners and mountain bikers. Less signage than parks —
+  a map is essential.
+bounds:
+  - [35.93, -79.05]
+  - [36.05, -78.90]
+center: [35.99, -78.97]
+defaultZoom: 13
+operator: Duke University
+
+subareas:
+  - name: Korstian Division
+    slug: korstian
+    description: >
+      The most accessible division, bordered by Erwin Road and NC 751.
+      Dense network of fire roads and named trails. Popular with Duke
+      students and local runners.
+    trailheads:
+      - name: Gate 2 (Whitfield Rd)
+        lat: 35.9756
+        lng: -78.9834
+        parking: true
+        notes: Limited roadside parking at gate
+      - name: Gate 11 (NC 751)
+        lat: 35.9612
+        lng: -78.9945
+        parking: true
+        notes: Pull-off parking along NC 751
+
+  - name: Durham Division
+    slug: durham-division
+    description: >
+      North of Erwin Road, adjacent to the Korstian Division. More remote
+      feel with longer fire road loops.
+    trailheads:
+      - name: Gate 25 (Mt Sinai Rd)
+        lat: 36.0012
+        lng: -78.9756
+        parking: true
+        notes: Roadside parking at gate
+
+  - name: Hillsboro Division
+    slug: hillsboro
+    description: >
+      Located west of Hillsborough in Orange County. Less visited,
+      longer trails, more solitude.
+
+  - name: Blackwood Division
+    slug: blackwood
+    description: >
+      Southern division near Jordan Lake. Remote and less trafficked.

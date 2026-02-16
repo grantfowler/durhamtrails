@@ -1,0 +1,22 @@
+name: Few's Ford
+slug: fews-ford
+area: eno-river
+subarea: fews-ford
+lat: 36.0678
+lng: -78.9625
+type: historic
+
+description: >
+  Historic river crossing on the Eno, once part of a major road connecting
+  Hillsborough to points east. The shallow ford is still crossable in low
+  water. Central junction point for trails heading to Cox Mountain (west)
+  and Pump Station (east).
+
+history: >
+  Named for William Few, a colonial-era settler. The ford was part of a
+  well-traveled road for centuries before European settlement — likely
+  following a Native American trading path.
+
+trails:
+  - buckquarter-creek-trail
+  - cox-mountain-trail
