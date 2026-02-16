@@ -1,0 +1,48 @@
+name: Durham Greenways
+slug: durham-greenways
+description: >
+  Durham's growing network of paved multi-use trails connecting neighborhoods,
+  parks, and downtown. Great for walking, running, and cycling. The American
+  Tobacco Trail is the flagship, running 22 miles from downtown to the Chatham
+  County line.
+bounds:
+  - [35.88, -78.95]
+  - [36.05, -78.85]
+center: [35.97, -78.90]
+defaultZoom: 12
+operator: Durham Parks and Recreation
+
+subareas:
+  - name: American Tobacco Trail
+    slug: att
+    description: >
+      22-mile rail-trail from downtown Durham to the Chatham County line,
+      following the former Norfolk Southern railroad corridor. Paved in
+      most sections, with a crushed stone segment south of I-40.
+    trailheads:
+      - name: Durham Bulls Athletic Park
+        lat: 35.9941
+        lng: -78.9023
+        parking: true
+        notes: Northern terminus, downtown Durham
+      - name: Scott King Rd Access
+        lat: 35.9312
+        lng: -78.9234
+        parking: true
+        notes: Mid-trail access with parking lot
+
+  - name: Ellerbe Creek Trail
+    slug: ellerbe-creek
+    description: >
+      Connects northern Durham neighborhoods along Ellerbe Creek
+      to downtown and the Eno River.
+
+  - name: Third Fork Trail
+    slug: third-fork
+    description: >
+      Runs through south Durham along Third Fork Creek.
+
+  - name: Lick Creek Trail
+    slug: lick-creek
+    description: >
+      Southern Durham greenway connecting to the American Tobacco Trail.

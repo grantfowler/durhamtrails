@@ -1,0 +1,44 @@
+name: New Hope Creek & Triangle Land Conservancy
+slug: new-hope-creek
+description: >
+  A network of preserves and trails along New Hope Creek in southwest Durham
+  and into Chatham County, managed primarily by the Triangle Land Conservancy
+  and Durham County. Quieter and less trafficked than the Eno, with some of
+  the best creek-bottom hiking in the area.
+bounds:
+  - [35.88, -79.05]
+  - [35.98, -78.92]
+center: [35.93, -78.98]
+defaultZoom: 13
+operator: Triangle Land Conservancy / Durham County
+
+subareas:
+  - name: Johnston Mill Nature Preserve
+    slug: johnston-mill
+    description: >
+      One of the most popular TLC preserves. Features old-growth forest
+      remnants and the ruins of Johnston Mill along New Hope Creek.
+    trailheads:
+      - name: Johnston Mill Parking
+        lat: 35.9342
+        lng: -78.9978
+        parking: true
+        notes: Off Erwin Rd
+
+  - name: Hollow Rock
+    slug: hollow-rock
+    description: >
+      Named for the distinctive rock formation along New Hope Creek.
+      Easy access and family-friendly trails.
+    trailheads:
+      - name: Hollow Rock Access
+        lat: 35.9301
+        lng: -78.9876
+        parking: true
+        notes: Off Erwin Rd near Hollow Rock Nature Park
+
+  - name: New Hope Preserve
+    slug: new-hope-preserve
+    description: >
+      Larger preserve with longer trail options. Less visited than Johnston Mill,
+      more of a wilderness feel.

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAreas, getTrails } from '../lib/data';
+
+const areas = getAreas();
+const trails = getTrails();
+
+const typeColors: Record<string, string> = {
+  official: 'bg-forest-100 text-forest-800',
+  unofficial: 'bg-trail-100 text-trail-800',
+  greenway: 'bg-green-100 text-green-800',
+  'fire-road': 'bg-amber-100 text-amber-800',
+  connector: 'bg-stone-100 text-stone-600',
+};
+
+const difficultyColors: Record<string, string> = {
+  easy: 'text-green-600',
+  moderate: 'text-amber-600',
+  difficult: 'text-red-600',
+};
+---
+
+<BaseLayout title="All Trails">
+  <h1 class="font-display text-3xl font-bold text-stone-800 mb-2">All Trails</h1>
+  <p class="text-stone-600 mb-6">{trails.length} trails, {trails.reduce((s, t) => s + (t.distance_miles || 0), 0).toFixed(1)} total miles</p>
+
+  <!-- Sort/filter bar -->
+  <div class="flex flex-wrap gap-3 mb-6 items-center">
+    <select id="area-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+      <option value="">All Areas</option>
+      {areas.map(a => <option value={a.slug}>{a.name}</option>)}
+    </select>
+    <select id="type-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+      <option value="">All Types</option>
+      <option value="official">Official</option>
+      <option value="unofficial">Unofficial</option>
+      <option value="greenway">Greenway</option>
+      <option value="fire-road">Fire Road</option>
+    </select>
+    <select id="difficulty-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+      <option value="">All Difficulties</option>
+      <option value="easy">Easy</option>
+      <option value="moderate">Moderate</option>
+      <option value="difficult">Difficult</option>
+    </select>
+  </div>
+
+  <div id="trail-list" class="space-y-3">
+    {trails.sort((a, b) => a.name.localeCompare(b.name)).map(trail => {
+      const area = areas.find(a => a.slug === trail.area);
+      return (
+        <div class="trail-card bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors"
+             data-area={trail.area} data-type={trail.type} data-difficulty={trail.difficulty || ''}>
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-medium text-stone-800">{trail.name}</h3>
+              <div class="flex items-center gap-3 mt-1 text-xs text-stone-500 flex-wrap">
+                <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
+                <span>{trail.distance_miles} mi</span>
+                {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
+                <span>{trail.loop ? 'loop' : 'out & back'}</span>
+                {area && <span class="text-stone-400">{area.name}</span>}
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
+        </div>
+      );
+    })}
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = ['area-filter', 'type-filter', 'difficulty-filter'];
+    filters.forEach(id => {
+      document.getElementById(id)?.addEventListener('change', applyFilters);
+    });
+
+    function applyFilters() {
+      const area = document.getElementById('area-filter').value;
+      const type = document.getElementById('type-filter').value;
+      const diff = document.getElementById('difficulty-filter').value;
+
+      document.querySelectorAll('.trail-card').forEach(card => {
+        const matchArea = !area || card.dataset.area === area;
+        const matchType = !type || card.dataset.type === type;
+        const matchDiff = !diff || card.dataset.difficulty === diff;
+        card.style.display = (matchArea && matchType && matchDiff) ? '' : 'none';
+      });
+    }
+  });
+</script>

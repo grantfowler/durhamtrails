@@ -1,0 +1,321 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAreas, getTrails, getPOIs } from '../lib/data';
+
+const areas = getAreas();
+const trails = getTrails();
+const pois = getPOIs();
+---
+
+<BaseLayout title="Trail Map" fullWidth>
+  <div class="h-[calc(100vh-56px)] flex flex-col md:flex-row">
+    <!-- Sidebar (desktop: left panel, mobile: bottom sheet) -->
+    <aside id="sidebar" class="
+      w-full md:w-[360px] 
+      bg-white border-r border-stone-200
+      flex flex-col
+      order-2 md:order-1
+      max-h-[40vh] md:max-h-full
+      overflow-hidden
+      z-[500]
+      relative
+    ">
+      <!-- Search & Filters -->
+      <div class="p-4 border-b border-stone-200 flex-shrink-0">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input 
+            id="search" 
+            type="text" 
+            placeholder="Search trails, areas, POIs..." 
+            class="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500 focus:border-transparent"
+          />
+        </div>
+        <div class="flex gap-2 mt-3 flex-wrap">
+          <button data-filter="all" class="filter-btn active px-3 py-1 text-xs rounded-full bg-forest-600 text-white">All</button>
+          <button data-filter="official" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Official</button>
+          <button data-filter="unofficial" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Unofficial</button>
+          <button data-filter="greenway" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Greenway</button>
+          <button data-filter="fire-road" class="filter-btn px-3 py-1 text-xs rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200">Fire Road</button>
+        </div>
+      </div>
+
+      <!-- Results list -->
+      <div id="results-list" class="flex-1 overflow-y-auto">
+        <!-- Area groups -->
+        {areas.map(area => {
+          const areaTrails = trails.filter(t => t.area === area.slug);
+          return (
+            <div class="area-group" data-area={area.slug}>
+              <button class="area-header w-full text-left px-4 py-3 bg-stone-50 border-b border-stone-200 hover:bg-stone-100 transition-colors flex items-center justify-between"
+                      data-center={JSON.stringify(area.center)} data-zoom={area.defaultZoom}>
+                <div>
+                  <div class="font-medium text-stone-800 text-sm">{area.name}</div>
+                  <div class="text-xs text-stone-500">{areaTrails.length} trails</div>
+                </div>
+                <svg class="w-4 h-4 text-stone-400 area-chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              <div class="area-trails hidden">
+                {areaTrails.map(trail => (
+                  <button class="trail-item w-full text-left px-4 py-2.5 border-b border-stone-100 hover:bg-forest-50 transition-colors flex items-center gap-3"
+                          data-trail={trail.slug} data-area={trail.area} data-type={trail.type}>
+                    <span class={`w-2 h-2 rounded-full flex-shrink-0 ${
+                      trail.type === 'official' ? 'bg-forest-600' :
+                      trail.type === 'unofficial' ? 'bg-trail-500' :
+                      trail.type === 'greenway' ? 'bg-forest-400' :
+                      trail.type === 'fire-road' ? 'bg-trail-700' :
+                      'bg-forest-300'
+                    }`}></span>
+                    <div class="min-w-0">
+                      <div class="text-sm text-stone-800 truncate">{trail.name}</div>
+                      <div class="text-xs text-stone-500">
+                        {trail.distance_miles} mi · {trail.difficulty || 'unknown'} · {trail.loop ? 'loop' : 'out & back'}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </aside>
+
+    <!-- Map -->
+    <div id="map" class="flex-1 order-1 md:order-2 min-h-[60vh] md:min-h-0 z-[100]"></div>
+
+    <!-- Trail Detail Panel -->
+    <div id="detail-panel" class="
+      fixed md:absolute right-0 top-0 bottom-0
+      w-full md:w-[400px]
+      bg-white shadow-2xl
+      transform translate-x-full
+      transition-transform duration-300 ease-out
+      z-[1000]
+      overflow-hidden flex flex-col
+    ">
+      <div class="flex items-center justify-between p-4 border-b border-stone-200 flex-shrink-0">
+        <button id="detail-close" class="flex items-center gap-1 text-stone-500 hover:text-stone-800 text-sm transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Close
+        </button>
+      </div>
+      <div id="detail-content" class="flex-1 overflow-y-auto p-5"></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline define:vars={{ areas, trails, pois }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof L === 'undefined') return;
+
+    // Initialize map with topo tiles
+    const map = L.map('map', { zoomControl: true }).setView([36.0, -78.94], 12);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
+    }).addTo(map);
+
+    // Trail type styles
+    const trailStyles = {
+      official:   { color: '#358538', weight: 3, opacity: 0.8 },
+      unofficial: { color: '#8a7f56', weight: 2, opacity: 0.7, dashArray: '8 4' },
+      greenway:   { color: '#46a34a', weight: 4, opacity: 0.8 },
+      'fire-road':{ color: '#726845', weight: 2, opacity: 0.7, dashArray: '4 4' },
+      connector:  { color: '#9dd89f', weight: 1.5, opacity: 0.6, dashArray: '6 3' },
+    };
+
+    // POI icons
+    const poiIcons = {
+      trailhead: '🅿️', historic: '🏛️', natural: '🌿', bridge: '🌉',
+      campsite: '⛺', overlook: '👁️', ruins: '🧱',
+    };
+
+    // Add POI markers
+    pois.forEach(poi => {
+      const icon = L.divIcon({
+        html: `<span class="text-lg">${poiIcons[poi.type] || '📍'}</span>`,
+        className: 'poi-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+      });
+      const marker = L.marker([poi.lat, poi.lng], { icon }).addTo(map);
+      marker.bindTooltip(poi.name, { direction: 'top', offset: [0, -8] });
+      marker.on('click', () => showPOIDetail(poi));
+    });
+
+    // Add trailhead markers from areas
+    areas.forEach(area => {
+      (area.subareas || []).forEach(sub => {
+        (sub.trailheads || []).forEach(th => {
+          const icon = L.divIcon({
+            html: '<span class="text-lg">🅿️</span>',
+            className: 'poi-marker',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+          });
+          const marker = L.marker([th.lat, th.lng], { icon }).addTo(map);
+          marker.bindTooltip(`${th.name}${th.notes ? ' — ' + th.notes : ''}`, { direction: 'top', offset: [0, -8] });
+        });
+      });
+    });
+
+    // Sidebar: area expand/collapse
+    document.querySelectorAll('.area-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const group = header.closest('.area-group');
+        const trailsDiv = group.querySelector('.area-trails');
+        const chevron = header.querySelector('.area-chevron');
+        trailsDiv.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-90');
+
+        // Pan map to area
+        const center = JSON.parse(header.dataset.center);
+        const zoom = parseInt(header.dataset.zoom);
+        map.flyTo(center, zoom);
+      });
+    });
+
+    // Sidebar: trail click
+    document.querySelectorAll('.trail-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const trail = trails.find(t => t.slug === item.dataset.trail);
+        if (trail) showTrailDetail(trail);
+      });
+    });
+
+    // Search
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      document.querySelectorAll('.area-group').forEach(group => {
+        const areaName = group.querySelector('.area-header .font-medium').textContent.toLowerCase();
+        const trailItems = group.querySelectorAll('.trail-item');
+        let areaMatch = !q || areaName.includes(q);
+        let trailMatch = false;
+
+        trailItems.forEach(item => {
+          const name = item.querySelector('.text-sm').textContent.toLowerCase();
+          const match = !q || name.includes(q) || areaMatch;
+          item.style.display = match ? '' : 'none';
+          if (name.includes(q)) trailMatch = true;
+        });
+
+        group.style.display = (areaMatch || trailMatch || !q) ? '' : 'none';
+        if (q && trailMatch) {
+          group.querySelector('.area-trails').classList.remove('hidden');
+          group.querySelector('.area-chevron').classList.add('rotate-90');
+        }
+      });
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-forest-600', 'text-white');
+          b.classList.add('bg-stone-100', 'text-stone-600');
+        });
+        btn.classList.add('active', 'bg-forest-600', 'text-white');
+        btn.classList.remove('bg-stone-100', 'text-stone-600');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.trail-item').forEach(item => {
+          item.style.display = (filter === 'all' || item.dataset.type === filter) ? '' : 'none';
+        });
+      });
+    });
+
+    // Detail panel
+    function showTrailDetail(trail) {
+      const panel = document.getElementById('detail-panel');
+      const content = document.getElementById('detail-content');
+      
+      const typeColors = {
+        official: 'bg-forest-100 text-forest-800',
+        unofficial: 'bg-trail-100 text-trail-800',
+        greenway: 'bg-green-100 text-green-800',
+        'fire-road': 'bg-amber-100 text-amber-800',
+        connector: 'bg-stone-100 text-stone-600',
+      };
+
+      content.innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <span class="inline-block px-2 py-0.5 text-xs font-medium rounded-full ${typeColors[trail.type] || 'bg-stone-100'} mb-2">${trail.type}</span>
+            <h2 class="text-2xl font-display font-bold text-stone-900">${trail.name}</h2>
+          </div>
+          <div class="flex flex-wrap gap-4 text-sm text-stone-600">
+            <span>${trail.distance_miles} mi</span>
+            ${trail.difficulty ? `<span>${trail.difficulty}</span>` : ''}
+            <span>${trail.loop ? 'Loop' : 'Out & Back'}</span>
+            ${trail.blaze ? `<span>Blaze: ${trail.blaze}</span>` : ''}
+            ${trail.elevation_gain_ft ? `<span>↑ ${trail.elevation_gain_ft} ft</span>` : ''}
+          </div>
+          <p class="text-stone-700 leading-relaxed">${trail.description}</p>
+          ${trail.history ? `
+            <div class="bg-trail-50 border border-trail-200 rounded-lg p-4">
+              <h3 class="text-xs font-semibold text-trail-700 uppercase tracking-wider mb-2">History</h3>
+              <p class="text-sm text-trail-800">${trail.history}</p>
+            </div>
+          ` : ''}
+          ${trail.connections?.length ? `
+            <div>
+              <h3 class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">Connections</h3>
+              <ul class="space-y-1">
+                ${trail.connections.map(c => `
+                  <li class="text-sm text-stone-600">
+                    <span class="text-forest-700 font-medium">${c.trail}</span>
+                    <span class="text-stone-400"> at </span>${c.at}
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${trail.notes ? `<p class="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">${trail.notes}</p>` : ''}
+        </div>
+      `;
+
+      panel.classList.remove('translate-x-full');
+    }
+
+    function showPOIDetail(poi) {
+      const panel = document.getElementById('detail-panel');
+      const content = document.getElementById('detail-content');
+
+      content.innerHTML = `
+        <div class="space-y-4">
+          <div>
+            <span class="text-2xl mr-2">${poiIcons[poi.type] || '📍'}</span>
+            <span class="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-stone-100 text-stone-600 mb-2">${poi.type}</span>
+            <h2 class="text-2xl font-display font-bold text-stone-900 mt-1">${poi.name}</h2>
+          </div>
+          <p class="text-stone-700 leading-relaxed">${poi.description}</p>
+          ${poi.history ? `
+            <div class="bg-trail-50 border border-trail-200 rounded-lg p-4">
+              <h3 class="text-xs font-semibold text-trail-700 uppercase tracking-wider mb-2">History</h3>
+              <p class="text-sm text-trail-800">${poi.history}</p>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      panel.classList.remove('translate-x-full');
+    }
+
+    document.getElementById('detail-close').addEventListener('click', () => {
+      document.getElementById('detail-panel').classList.add('translate-x-full');
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('detail-panel').classList.add('translate-x-full'); });
+  });
+</script>
+
+<style>
+  .poi-marker { background: none !important; border: none !important; }
+</style>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About">
+  <div class="max-w-2xl">
+    <h1 class="font-display text-3xl font-bold text-stone-800 mb-6">About Durham Trails</h1>
+    
+    <div class="prose prose-stone max-w-none">
+      <p class="text-lg text-stone-700 leading-relaxed">
+        Durham Trails is a comprehensive guide to hiking trails in and around Durham, North Carolina. 
+        Our goal is simple: be the most useful, complete, and up-to-date source for trail information 
+        in the Durham area.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-stone-800 mt-8 mb-3">Why This Exists</h2>
+      <p class="text-stone-700">
+        Durham has incredible hiking — from the Eno River gorges to Duke Forest's fire roads to 
+        the greenways connecting it all. But finding good trail information has always been harder 
+        than it should be. Official park maps are incomplete, trail apps don't know about the 
+        social trails, and the best local knowledge lives in people's heads or scattered Reddit threads.
+      </p>
+      <p class="text-stone-700">
+        This site aims to fix that. We include official trails, unofficial social trails, 
+        fire roads, greenways, and the connectors between them — everything a hiker, runner, 
+        or dog walker needs to explore Durham's outdoors.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-stone-800 mt-8 mb-3">Trail Data</h2>
+      <p class="text-stone-700">
+        Trail geometry comes from <a href="https://www.openstreetmap.org" class="text-forest-700 underline">OpenStreetMap</a> 
+        contributors, supplemented with GPS data from local hikers. Trail descriptions, history notes, 
+        and local knowledge come from years of running and hiking these trails.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-stone-800 mt-8 mb-3">Contact</h2>
+      <p class="text-stone-700">
+        Know a trail we're missing? Have a correction? We'd love to hear from you.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

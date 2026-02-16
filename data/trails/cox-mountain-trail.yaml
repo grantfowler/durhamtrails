@@ -1,0 +1,23 @@
+name: Cox Mountain Trail
+slug: cox-mountain-trail
+area: eno-river
+subarea: cox-mountain
+type: official
+difficulty: difficult
+blaze: orange
+distance_miles: 3.75
+elevation_gain_ft: 450
+loop: true
+osmRelationId: 17591490
+
+description: >
+  The most challenging trail in the Eno River system. A rugged loop climbing
+  Cox Mountain with steep, rocky sections and creek crossings. The cable
+  bridge at Eno Trace adds adventure to the approach. Not recommended
+  after heavy rain — the river crossing can be impassable.
+
+connections:
+  - trail: eno-trace-trail
+    at: Cable bridge at loop parking area
+  - trail: fannys-ford-trail
+    at: Junction near Eno River crossing
