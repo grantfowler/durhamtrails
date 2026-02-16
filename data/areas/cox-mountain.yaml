@@ -1,0 +1,20 @@
+name: Cox Mountain
+slug: cox-mountain
+parent: eno-river
+description: >
+  The most rugged section of the park. Home to the challenging Cox Mountain
+  loop and access to backcountry camping via Fanny's Ford Trail. Start from
+  the Cole Mill Road parking areas.
+center: [36.071, -78.967]
+defaultZoom: 15
+trailheads:
+  - name: Cole Mill Loop Parking
+    lat: 36.0712
+    lng: -78.9673
+    parking: true
+    notes: End of Cole Mill Rd, main access to Cox Mountain and Fanny's Ford trails
+  - name: Upper Parking (Ranger Station)
+    lat: 36.0695
+    lng: -78.9651
+    parking: true
+    notes: Just past the ranger station, access to Few's Ford and Buckquarter Creek

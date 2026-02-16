@@ -1,0 +1,20 @@
+name: Korstian Division
+slug: korstian
+parent: duke-forest
+description: >
+  The most accessible division, bordered by Erwin Road and NC 751.
+  Dense network of fire roads and named trails. Popular with Duke
+  students and local runners.
+center: [35.976, -78.983]
+defaultZoom: 14
+trailheads:
+  - name: Gate 2 (Whitfield Rd)
+    lat: 35.9756
+    lng: -78.9834
+    parking: true
+    notes: Limited roadside parking at gate
+  - name: Gate 11 (NC 751)
+    lat: 35.9612
+    lng: -78.9945
+    parking: true
+    notes: Pull-off parking along NC 751

@@ -1,7 +1,8 @@
 name: American Tobacco Trail
 slug: american-tobacco-trail
-area: durham-greenways
-subarea: att
+areas:
+  - durham-greenways
+  - att
 type: greenway
 difficulty: easy
 distance_miles: 22.0

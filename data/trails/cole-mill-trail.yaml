@@ -1,7 +1,8 @@
 name: Cole Mill Trail
 slug: cole-mill-trail
-area: eno-river
-subarea: cole-mill
+areas:
+  - eno-river
+  - cole-mill
 type: official
 difficulty: moderate
 blaze: red

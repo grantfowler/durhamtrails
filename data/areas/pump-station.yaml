@@ -1,0 +1,14 @@
+name: Pump Station
+slug: pump-station
+parent: eno-river
+description: >
+  Eastern section accessed from Guess Road or Rivermont Road. Features
+  the old Durham pump station ruins and connects to the Laurel Bluffs area.
+center: [36.046, -78.924]
+defaultZoom: 15
+trailheads:
+  - name: Guess Road Access
+    lat: 36.0456
+    lng: -78.9243
+    parking: true
+    notes: Parking area off Guess Rd

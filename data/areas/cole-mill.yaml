@@ -1,0 +1,15 @@
+name: Cole Mill
+slug: cole-mill
+parent: eno-river
+description: >
+  Popular riverside trails with access to Bobbitt Hole swimming area.
+  Connects to the Mountains-to-Sea Trail. Good mix of easy riverside
+  walking and moderate ridge trails.
+center: [36.056, -78.953]
+defaultZoom: 15
+trailheads:
+  - name: Old Cole Mill Rd Parking
+    lat: 36.0558
+    lng: -78.9528
+    parking: true
+    notes: End of Old Cole Mill Rd at Umstead Rd/Cole Mill Rd stoplight

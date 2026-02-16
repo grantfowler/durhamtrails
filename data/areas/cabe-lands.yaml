@@ -1,0 +1,14 @@
+name: Cabe Lands
+slug: cabe-lands
+parent: eno-river
+description: >
+  Accessed from Howe Street off Sparger Road. Short but scenic loop
+  with the old quarry and connections to the Mountains-to-Sea Trail.
+center: [36.039, -78.937]
+defaultZoom: 15
+trailheads:
+  - name: Howe Street Parking
+    lat: 36.0389
+    lng: -78.9367
+    parking: true
+    notes: Down Howe Street off Sparger Rd, just north of I-85

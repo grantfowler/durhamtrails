@@ -1,7 +1,8 @@
 name: Johnston Mill Nature Preserve Loop
 slug: johnston-mill-loop
-area: new-hope-creek
-subarea: johnston-mill
+areas:
+  - new-hope-creek
+  - johnston-mill
 type: official
 difficulty: easy
 distance_miles: 2.0

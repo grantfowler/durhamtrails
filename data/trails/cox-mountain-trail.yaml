@@ -1,7 +1,8 @@
 name: Cox Mountain Trail
 slug: cox-mountain-trail
-area: eno-river
-subarea: cox-mountain
+areas:
+  - eno-river
+  - cox-mountain
 type: official
 difficulty: difficult
 blaze: orange

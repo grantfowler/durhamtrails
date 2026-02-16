@@ -1,7 +1,8 @@
 name: Buckquarter Creek Trail
 slug: buckquarter-creek-trail
-area: eno-river
-subarea: cox-mountain
+areas:
+  - eno-river
+  - cox-mountain
 type: official
 difficulty: moderate
 blaze: blue

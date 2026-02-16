@@ -6,56 +6,58 @@ All trail data lives in YAML files under `data/`. No database needed.
 
 ```
 data/
-├── schema.md          # This file
-├── areas/             # Top-level trail areas
+├── schema.md              # This file
+├── areas/                 # All areas (flat, with optional parent)
 │   ├── eno-river.yaml
-│   ├── new-hope-creek.yaml
+│   ├── cox-mountain.yaml       # parent: eno-river
+│   ├── cole-mill.yaml          # parent: eno-river
 │   ├── duke-forest.yaml
-│   ├── durham-greenways.yaml
-│   ├── occoneechee.yaml
-│   └── falls-lake.yaml
-├── trails/            # Individual trail files
-│   ├── cox-mountain-trail.yaml
-│   ├── buckquarter-creek-trail.yaml
+│   ├── korstian.yaml           # parent: duke-forest
 │   └── ...
-└── pois/              # Points of interest
+├── trails/                # Individual trail files
+│   ├── cox-mountain-trail.yaml
+│   └── ...
+└── pois/                  # Points of interest
     ├── fews-ford.yaml
     └── ...
 ```
 
 ## Area Schema
 
+Areas are flat — hierarchy comes from the `parent` field. This allows arbitrary depth:
+`All > Falls Lake > MST > Red Mill Road Area > ...`
+
+Each area gets its own page, its own history, its own map view.
+
 ```yaml
 name: string                    # Display name
 slug: string                    # URL-safe identifier (matches filename)
+parent: string                  # Optional. Slug of parent area. Null/omitted = top-level.
 description: string             # Brief overview
 bounds:                         # Map bounding box [sw, ne]
   - [lat, lng]
   - [lat, lng]
 center: [lat, lng]              # Default map center
 defaultZoom: number             # Default zoom level
-operator: string                # Managing entity (NC State Parks, Duke University, etc.)
-
-subareas:                       # Optional subdivisions
+operator: string                # Managing entity (optional)
+history: string                 # Optional deeper history
+trailheads:                     # Parking/access points for this area
   - name: string
-    slug: string
-    description: string
-    bounds: [[lat, lng], [lat, lng]]  # Optional, for map highlighting
-    trailheads:                 # Parking/access points for this sub-area
-      - name: string
-        lat: number
-        lng: number
-        parking: boolean
-        notes: string           # "End of Cole Mill Rd, loop parking lot"
+    lat: number
+    lng: number
+    parking: boolean
+    notes: string
 ```
 
 ## Trail Schema
 
+Trails are tagged to one or more areas (not just one). A trail that crosses
+area boundaries belongs to all of them.
+
 ```yaml
 name: string                    # Display name
 slug: string                    # URL-safe identifier (matches filename)
-area: string                    # Area slug (e.g., "eno-river")
-subarea: string                 # Optional sub-area slug (e.g., "cox-mountain")
+areas: [string]                 # Area slugs this trail belongs to (one or more)
 
 # Classification
 type: enum                      # official | unofficial | greenway | fire-road | connector
@@ -79,17 +81,18 @@ connections:
 
 # Geo data
 gpx: string                     # Path to GPX file (optional, for trails not in OSM)
-osmRelationId: number           # OSM relation ID if available (for pulling geometry)
+osmRelationId: number           # OSM relation ID if available
 osmWayIds: [number]             # OSM way IDs if no relation exists
 ```
 
 ## POI Schema
 
+POIs are also tagged to one or more areas.
+
 ```yaml
 name: string
 slug: string
-area: string                    # Area slug
-subarea: string                 # Optional
+areas: [string]                 # Area slugs this POI belongs to (one or more)
 lat: number
 lng: number
 
