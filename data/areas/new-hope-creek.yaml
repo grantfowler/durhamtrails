@@ -1,0 +1,13 @@
+name: New Hope Creek & Triangle Land Conservancy
+slug: new-hope-creek
+description: >
+  A network of preserves and trails along New Hope Creek in southwest Durham
+  and into Chatham County, managed primarily by the Triangle Land Conservancy
+  and Durham County. Quieter and less trafficked than the Eno, with some of
+  the best creek-bottom hiking in the area.
+bounds:
+  - [35.88, -79.05]
+  - [35.98, -78.92]
+center: [35.93, -78.98]
+defaultZoom: 13
+operator: Triangle Land Conservancy / Durham County

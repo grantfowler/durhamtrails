@@ -1,0 +1,27 @@
+name: Cox Mountain Trail
+slug: cox-mountain-trail
+areas: [cox-mountain, eno-river]
+
+segments:
+  - cox-mtn-approach
+  - cox-mtn-ridge
+  - cox-mtn-descent
+loop: true
+
+type: official
+difficulty: moderate
+blaze: red circle
+
+# Computed from segments (cached)
+distance_miles: 1.5
+elevation_gain_ft: 500
+
+description: >
+  Rocky loop trail climbing to the highest point in Eno River State Park.
+  Moderate elevation gain with some scrambling near the summit. The approach
+  follows the river before turning uphill at the Buckquarter Creek junction.
+history: >
+  Cox Mountain was historically used as a quarry site. Stone remnants
+  are still visible along the descent trail.
+
+osm_relation_id: 2424748

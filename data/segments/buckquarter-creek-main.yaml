@@ -1,0 +1,13 @@
+slug: buckquarter-creek-main
+from: cox-mtn-buckquarter-jct
+to: buckquarter-creek-end
+areas: [cox-mountain]
+
+distance_ft: 5280
+elevation_gain_ft: 150
+surface: singletrack
+difficulty: easy
+blaze: orange
+
+geometry: buckquarter-creek-main.geojson
+source: osm

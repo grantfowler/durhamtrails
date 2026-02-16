@@ -1,0 +1,19 @@
+name: Cole Mill Trail
+slug: cole-mill-trail
+areas: [cole-mill, eno-river]
+
+segments: []                    # TODO: add segments when geometry available
+loop: true
+
+type: official
+difficulty: moderate
+blaze: red
+
+distance_miles: 1.2
+elevation_gain_ft: ~
+
+description: >
+  A popular moderate loop starting from the Old Cole Mill Rd parking area.
+  Runs along the Eno River with access to Bobbitt Hole — a beloved swimming
+  spot in summer. The trail climbs up the ridge before looping back down
+  to the river.

@@ -1,0 +1,12 @@
+name: Hollow Rock
+slug: hollow-rock
+parents:
+  - new-hope-creek
+description: 'Named for the distinctive rock formation along New Hope Creek. Easy
+  access and family-friendly trails.
+
+  '
+center:
+- 35.93
+- -78.988
+defaultZoom: 15

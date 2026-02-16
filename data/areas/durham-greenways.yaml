@@ -1,0 +1,13 @@
+name: Durham Greenways
+slug: durham-greenways
+description: >
+  Durham's growing network of paved multi-use trails connecting neighborhoods,
+  parks, and downtown. Great for walking, running, and cycling. The American
+  Tobacco Trail is the flagship, running 22 miles from downtown to the Chatham
+  County line.
+bounds:
+  - [35.88, -78.95]
+  - [36.05, -78.85]
+center: [35.97, -78.90]
+defaultZoom: 12
+operator: Durham Parks and Recreation

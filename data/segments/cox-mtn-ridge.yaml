@@ -1,0 +1,13 @@
+slug: cox-mtn-ridge
+from: cox-mtn-buckquarter-jct
+to: cox-mtn-summit
+areas: [cox-mountain]
+
+distance_ft: 2640
+elevation_gain_ft: 380
+surface: singletrack
+difficulty: moderate
+blaze: red
+
+geometry: cox-mtn-ridge.geojson
+source: osm

@@ -1,0 +1,13 @@
+name: Duke Forest
+slug: duke-forest
+description: >
+  Over 7,000 acres of managed research forest spread across six divisions
+  in Durham and Orange counties. A maze of fire roads and gated trails,
+  popular with trail runners and mountain bikers. Less signage than parks —
+  a map is essential.
+bounds:
+  - [35.93, -79.05]
+  - [36.05, -78.90]
+center: [35.99, -78.97]
+defaultZoom: 13
+operator: Duke University

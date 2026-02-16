@@ -1,0 +1,14 @@
+name: Occoneechee Mountain
+slug: occoneechee
+parents:
+  - eno-river
+description: 'Technically a separate state natural area in Hillsborough. The highest
+  point in Orange County with panoramic views. Home to rare Brown Elfin butterfly
+  habitat.
+
+  '
+center:
+- 36.064
+- -79.1
+defaultZoom: 15
+operator: NC Division of Parks and Recreation

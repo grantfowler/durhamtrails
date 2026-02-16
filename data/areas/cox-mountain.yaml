@@ -1,0 +1,13 @@
+name: Cox Mountain
+slug: cox-mountain
+parents:
+  - eno-river
+description: 'The most rugged section of the park. Home to the challenging Cox Mountain
+  loop and access to backcountry camping via Fanny''s Ford Trail. Start from the Cole
+  Mill Road parking areas.
+
+  '
+center:
+- 36.071
+- -78.967
+defaultZoom: 15

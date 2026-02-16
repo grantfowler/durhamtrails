@@ -1,0 +1,12 @@
+name: Eno River State Park
+slug: eno-river
+description: >
+  The crown jewel of Durham hiking. Over 30 miles of trails winding along
+  the Eno River from Hillsborough to Falls Lake, through gorges, past
+  historic mill ruins, and across some of the most varied terrain in the Piedmont.
+bounds:
+  - [35.97, -79.05]
+  - [36.08, -78.88]
+center: [36.04, -78.95]
+defaultZoom: 13
+operator: NC Division of Parks and Recreation

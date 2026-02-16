@@ -1,0 +1,20 @@
+name: American Tobacco Trail
+slug: american-tobacco-trail
+areas: [american-tobacco-trail, durham-greenways]
+
+segments: []                    # TODO: add segments when geometry available
+loop: false
+
+type: greenway
+difficulty: easy
+
+distance_miles: 22.0
+elevation_gain_ft: ~
+
+description: >
+  22-mile rail trail running from downtown Durham south to the Chatham
+  County line. Built on a former railroad corridor, the paved multi-use
+  path passes through urban, suburban, and rural landscapes.
+notes: >
+  The trail has a gap at I-40 that requires a brief road detour.
+  The southern unpaved section is gravel and can be muddy after rain.
