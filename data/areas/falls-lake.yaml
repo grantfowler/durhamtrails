@@ -9,18 +9,5 @@ bounds:
   - [36.00, -78.90]
   - [36.10, -78.70]
 center: [36.05, -78.80]
-defaultZoom: 13
+default_zoom: 13
 operator: NC Division of Parks and Recreation / US Army Corps of Engineers
-
-subareas:
-  - name: Falls Lake Trail (Durham Section)
-    slug: falls-lake-trail-durham
-    description: >
-      The western segments of the Falls Lake Trail closest to Durham.
-      Rolling terrain through mixed forest with occasional lake views.
-    trailheads:
-      - name: Old NC 98 Access
-        lat: 36.0523
-        lng: -78.7234
-        parking: true
-        notes: Near the dam, eastern terminus of Durham-accessible sections

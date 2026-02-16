@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAreas, getTrails } from '../../lib/data';
+import { getTopLevelAreas, getTrailsForArea, getChildAreas } from '../../lib/data';
 
-const areas = getAreas();
-const trails = getTrails();
+const areas = getTopLevelAreas();
 ---
 
 <BaseLayout title="Trail Areas">
@@ -12,7 +11,8 @@ const trails = getTrails();
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {areas.map(area => {
-      const areaTrails = trails.filter(t => t.area === area.slug);
+      const areaTrails = getTrailsForArea(area.slug);
+      const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
       const totalMiles = areaTrails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
       return (
         <a href={`/areas/${area.slug}`} class="group bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:shadow-md hover:border-forest-300 transition-all">
@@ -22,7 +22,7 @@ const trails = getTrails();
           <div class="flex items-center gap-4 mt-4 text-xs text-stone-500 border-t border-stone-100 pt-3">
             <span>{areaTrails.length} trails</span>
             {totalMiles > 0 && <span>{totalMiles.toFixed(1)} miles</span>}
-            {area.subareas && <span>{area.subareas.length} sections</span>}
+            {children.length > 0 && <span>{children.length} sections</span>}
           </div>
         </a>
       );

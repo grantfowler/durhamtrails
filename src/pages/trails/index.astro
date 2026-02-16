@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getAreas, getTrails } from '../lib/data';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTopLevelAreas, getTrails, getArea } from '../../lib/data';
 
-const areas = getAreas();
+const areas = getTopLevelAreas();
 const trails = getTrails();
 
 const typeColors: Record<string, string> = {
@@ -24,7 +24,6 @@ const difficultyColors: Record<string, string> = {
   <h1 class="font-display text-3xl font-bold text-stone-800 mb-2">All Trails</h1>
   <p class="text-stone-600 mb-6">{trails.length} trails, {trails.reduce((s, t) => s + (t.distance_miles || 0), 0).toFixed(1)} total miles</p>
 
-  <!-- Sort/filter bar -->
   <div class="flex flex-wrap gap-3 mb-6 items-center">
     <select id="area-filter" class="text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
       <option value="">All Areas</option>
@@ -47,16 +46,17 @@ const difficultyColors: Record<string, string> = {
 
   <div id="trail-list" class="space-y-3">
     {trails.sort((a, b) => a.name.localeCompare(b.name)).map(trail => {
-      const area = areas.find(a => a.slug === trail.area);
+      const area = trail.areas?.[0] ? getArea(trail.areas[0]) : null;
       return (
-        <div class="trail-card bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors"
-             data-area={trail.area} data-type={trail.type} data-difficulty={trail.difficulty || ''}>
+        <a href={`/trails/${trail.slug}`}
+           class="trail-card block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors"
+           data-areas={JSON.stringify(trail.areas || [])} data-type={trail.type} data-difficulty={trail.difficulty || ''}>
           <div class="flex items-start justify-between gap-4">
             <div>
               <h3 class="font-medium text-stone-800">{trail.name}</h3>
               <div class="flex items-center gap-3 mt-1 text-xs text-stone-500 flex-wrap">
                 <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
-                <span>{trail.distance_miles} mi</span>
+                {trail.distance_miles && <span>{trail.distance_miles} mi</span>}
                 {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
                 <span>{trail.loop ? 'loop' : 'out & back'}</span>
                 {area && <span class="text-stone-400">{area.name}</span>}
@@ -64,7 +64,7 @@ const difficultyColors: Record<string, string> = {
             </div>
           </div>
           <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
-        </div>
+        </a>
       );
     })}
   </div>
@@ -83,7 +83,8 @@ const difficultyColors: Record<string, string> = {
       const diff = document.getElementById('difficulty-filter').value;
 
       document.querySelectorAll('.trail-card').forEach(card => {
-        const matchArea = !area || card.dataset.area === area;
+        const areas = JSON.parse(card.dataset.areas || '[]');
+        const matchArea = !area || areas.includes(area);
         const matchType = !type || card.dataset.type === type;
         const matchDiff = !diff || card.dataset.difficulty === diff;
         card.style.display = (matchArea && matchType && matchDiff) ? '' : 'none';

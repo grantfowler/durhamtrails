@@ -1,21 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAreas, getTrailsForArea, getPOIsForArea } from '../../lib/data';
+import { getTrailAreas, getArea, getTrailsForArea, getPOIsForArea, getChildAreas, getAccessPoints, getBreadcrumbs } from '../../lib/data';
 
 export function getStaticPaths() {
-  return getAreas().map(area => ({ params: { slug: area.slug }, props: { area } }));
+  return getTrailAreas().map(area => ({ params: { slug: area.slug }, props: { area } }));
 }
 
 const { area } = Astro.props;
 const trails = getTrailsForArea(area.slug);
 const pois = getPOIsForArea(area.slug);
+const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
+const accessPoints = getAccessPoints(area.slug);
+const breadcrumbs = getBreadcrumbs(area);
 
-const trailsBySubarea = new Map<string, typeof trails>();
-trails.forEach(t => {
-  const key = t.subarea || '_none';
-  if (!trailsBySubarea.has(key)) trailsBySubarea.set(key, []);
-  trailsBySubarea.get(key)!.push(t);
-});
+// Group trails by their most specific area within this area's tree
+const directTrails = trails.filter(t => t.areas?.includes(area.slug));
+const childTrailGroups = children.map(child => ({
+  area: child,
+  trails: trails.filter(t => t.areas?.includes(child.slug)),
+})).filter(g => g.trails.length > 0);
 
 const typeColors: Record<string, string> = {
   official: 'bg-forest-100 text-forest-800',
@@ -33,8 +36,15 @@ const difficultyColors: Record<string, string> = {
 ---
 
 <BaseLayout title={area.name}>
+  <!-- Breadcrumbs -->
   <nav class="text-sm text-stone-500 mb-4">
     <a href="/areas" class="hover:text-forest-700">Areas</a>
+    {breadcrumbs.map(crumb => (
+      <>
+        <span class="mx-1">›</span>
+        <a href={`/areas/${crumb.slug}`} class="hover:text-forest-700">{crumb.name}</a>
+      </>
+    ))}
     <span class="mx-1">›</span>
     <span class="text-stone-800">{area.name}</span>
   </nav>
@@ -47,72 +57,116 @@ const difficultyColors: Record<string, string> = {
       <p class="text-stone-700 leading-relaxed mb-8">{area.description}</p>
 
       <!-- Area map -->
-      <div id="area-map" class="w-full h-64 rounded-xl border border-stone-200 mb-8 z-0" 
-           data-center={JSON.stringify(area.center)} data-zoom={area.defaultZoom}></div>
+      {area.center && (
+        <div id="area-map" class="w-full h-64 rounded-xl border border-stone-200 mb-8 z-0"
+             data-center={JSON.stringify(area.center)} data-zoom={area.default_zoom || 14}></div>
+      )}
 
-      <!-- Trails by sub-area -->
-      {area.subareas?.map(sub => {
-        const subTrails = trailsBySubarea.get(sub.slug) || [];
-        return (
-          <div class="mb-8">
-            <h2 class="font-display text-xl font-bold text-stone-800 mb-1">{sub.name}</h2>
-            <p class="text-stone-600 text-sm mb-4">{sub.description}</p>
-            
-            {sub.trailheads?.length > 0 && (
-              <div class="mb-4">
-                {sub.trailheads.map(th => (
-                  <div class="flex items-start gap-2 text-sm text-stone-600 mb-1">
-                    <span>🅿️</span>
-                    <div>
-                      <span class="font-medium">{th.name}</span>
-                      {th.notes && <span class="text-stone-400"> — {th.notes}</span>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {subTrails.length > 0 && (
-              <div class="space-y-2">
-                {subTrails.map(trail => (
-                  <div class="bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
-                    <div class="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 class="font-medium text-stone-800">{trail.name}</h3>
-                        <div class="flex items-center gap-3 mt-1 text-xs text-stone-500">
-                          <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
-                          <span>{trail.distance_miles} mi</span>
-                          {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
-                          <span>{trail.loop ? 'loop' : 'out & back'}</span>
-                          {trail.blaze && <span>blaze: {trail.blaze}</span>}
-                        </div>
-                      </div>
-                    </div>
-                    <p class="text-sm text-stone-600 mt-2">{trail.description}</p>
-                    {trail.history && (
-                      <div class="bg-trail-50 border border-trail-200 rounded-md p-3 mt-3">
-                        <p class="text-xs text-trail-700 font-semibold uppercase tracking-wider mb-1">History</p>
-                        <p class="text-sm text-trail-800">{trail.history}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+      <!-- Child areas as navigation cards -->
+      {children.length > 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Sections</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {children.map(child => {
+              const childTrails = trails.filter(t => t.areas?.includes(child.slug));
+              return (
+                <a href={`/areas/${child.slug}`} class="group bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                  <h3 class="font-medium text-stone-800 group-hover:text-forest-700">{child.name}</h3>
+                  <p class="text-stone-500 text-xs mt-1 line-clamp-2">{child.description}</p>
+                  <div class="text-xs text-stone-400 mt-2">{childTrails.length} trails</div>
+                </a>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      )}
 
-      <!-- Trails without sub-area -->
-      {trailsBySubarea.has('_none') && (
+      <!-- Access points -->
+      {accessPoints.length > 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Parking & Access</h2>
+          <div class="space-y-3">
+            {accessPoints.map(ap => (
+              <div class="bg-white border border-stone-200 rounded-lg p-4">
+                <div class="flex items-start gap-2">
+                  <span class="text-lg">🅿️</span>
+                  <div>
+                    <h3 class="font-medium text-stone-800">{ap.name}</h3>
+                    {ap.address && <p class="text-sm text-stone-500">{ap.address}</p>}
+                    <div class="flex gap-4 mt-1 text-xs text-stone-500">
+                      {ap.hours && <span>Hours: {ap.hours}</span>}
+                      {ap.fee && <span>Fee: {ap.fee}</span>}
+                      {ap.parking_spaces && <span>~{ap.parking_spaces} spaces</span>}
+                      {ap.restrooms && <span>🚻 Restrooms</span>}
+                    </div>
+                    {ap.notes && <p class="text-xs text-stone-400 mt-1">{ap.notes}</p>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Trails grouped by child area -->
+      {childTrailGroups.map(({ area: child, trails: childTrails }) => (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-1">
+            <a href={`/areas/${child.slug}`} class="hover:text-forest-700">{child.name}</a>
+          </h2>
+          <p class="text-stone-600 text-sm mb-4">{child.description}</p>
+          <div class="space-y-2">
+            {childTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-medium text-stone-800">{trail.name}</h3>
+                    <div class="flex items-center gap-3 mt-1 text-xs text-stone-500">
+                      <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
+                      {trail.distance_miles && <span>{trail.distance_miles} mi</span>}
+                      {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
+                      <span>{trail.loop ? 'loop' : 'out & back'}</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Direct trails (not in a child area) -->
+      {directTrails.length > 0 && children.length > 0 && (
         <div class="mb-8">
           <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Other Trails</h2>
           <div class="space-y-2">
-            {trailsBySubarea.get('_none')!.map(trail => (
-              <div class="bg-white border border-stone-200 rounded-lg p-4">
+            {directTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
                 <h3 class="font-medium text-stone-800">{trail.name}</h3>
-                <p class="text-sm text-stone-600 mt-1">{trail.description}</p>
-              </div>
+                <p class="text-sm text-stone-600 mt-1 line-clamp-2">{trail.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+      {directTrails.length > 0 && children.length === 0 && (
+        <div class="mb-8">
+          <h2 class="font-display text-xl font-bold text-stone-800 mb-4">Trails</h2>
+          <div class="space-y-2">
+            {directTrails.map(trail => (
+              <a href={`/trails/${trail.slug}`} class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-forest-300 transition-colors">
+                <div>
+                  <h3 class="font-medium text-stone-800">{trail.name}</h3>
+                  <div class="flex items-center gap-3 mt-1 text-xs text-stone-500">
+                    <span class={`px-1.5 py-0.5 rounded text-[10px] font-medium ${typeColors[trail.type] || ''}`}>{trail.type}</span>
+                    {trail.distance_miles && <span>{trail.distance_miles} mi</span>}
+                    {trail.difficulty && <span class={difficultyColors[trail.difficulty]}>{trail.difficulty}</span>}
+                    <span>{trail.loop ? 'loop' : 'out & back'}</span>
+                  </div>
+                </div>
+                <p class="text-sm text-stone-600 mt-2 line-clamp-2">{trail.description}</p>
+              </a>
             ))}
           </div>
         </div>
@@ -132,10 +186,10 @@ const difficultyColors: Record<string, string> = {
             <dt class="text-stone-500">Total Miles</dt>
             <dd class="font-medium text-stone-800">{trails.reduce((s, t) => s + (t.distance_miles || 0), 0).toFixed(1)}</dd>
           </div>
-          {area.subareas && (
+          {children.length > 0 && (
             <div class="flex justify-between">
               <dt class="text-stone-500">Sections</dt>
-              <dd class="font-medium text-stone-800">{area.subareas.length}</dd>
+              <dd class="font-medium text-stone-800">{children.length}</dd>
             </div>
           )}
           {pois.length > 0 && (
@@ -158,6 +212,13 @@ const difficultyColors: Record<string, string> = {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {area.history && (
+        <div class="bg-trail-50 border border-trail-200 rounded-xl p-5">
+          <h3 class="font-display font-bold text-trail-800 mb-2">History</h3>
+          <p class="text-sm text-trail-700">{area.history}</p>
         </div>
       )}
 
