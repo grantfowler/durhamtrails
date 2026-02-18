@@ -1,0 +1,16 @@
+name: Lower Parking Lot
+slug: cox-mountain-lower-parking
+parents:
+  - cox-mountain
+type: access
+description: >
+  Largest parking area in the Cox Mountain section. Has bathrooms. Best access
+  for Cox Mountain trail and the interior/eastern side (once the swinging bridge
+  reopens).
+center:
+  - 36.07381
+  - -79.00613
+access_type: parking
+fee: Free
+restrooms: true
+notes: Primary trailhead for Cox Mountain loop. Bridge to eastern trails currently closed.

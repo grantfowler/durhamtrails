@@ -1,75 +1,124 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getTopLevelAreas, getTrails, getTrailsForArea, getChildAreas } from '../lib/data';
+import { getArea, getPOIsForArea, getTrailsForArea, getChildAreas, getAccessPoints } from '../lib/data';
 
-const topAreas = getTopLevelAreas();
-const trails = getTrails();
-const totalMiles = trails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
+const coxMtn = getArea('cox-mountain');
+const coxTrails = getTrailsForArea('cox-mountain');
+const coxPois = getPOIsForArea('cox-mountain');
+const accessPoints = getAccessPoints('cox-mountain');
 ---
 
-<BaseLayout title="Hiking Trails In and Around Durham, NC" fullWidth>
-  <!-- Hero with map background -->
+<BaseLayout title="Durham Trails — Cox Mountain, Eno River State Park" fullWidth>
+  <!-- Hero -->
   <section class="relative bg-forest-800 text-white">
     <div id="hero-map" class="absolute inset-0 opacity-30"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 py-20 text-center">
-      <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Durham Trails</h1>
-      <p class="text-xl text-forest-200 mb-8 max-w-2xl mx-auto">
-        Hiking trails, trail maps, and points of interest in and around Durham, North Carolina.
-        From the Eno River to Duke Forest to the greenways that connect them.
+      <p class="text-forest-300 text-sm font-medium tracking-wide uppercase mb-2">Durham Trails</p>
+      <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Cox Mountain</h1>
+      <p class="text-lg text-forest-200 mb-2">Eno River State Park</p>
+      <p class="text-base text-forest-300 max-w-2xl mx-auto mt-4">
+        Historic fords, mill ruins, abandoned roads, and some of the most rugged
+        terrain in the Triangle. Where trails reveal centuries of history.
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
         <a href="/map" class="bg-forest-500 hover:bg-forest-400 text-white px-6 py-3 rounded-lg font-medium transition-colors">
           Explore the Map
         </a>
-        <a href="/areas" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20">
-          Browse by Area
+        <a href="/areas/cox-mountain" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20">
+          Area Details
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Area cards -->
-  <section class="max-w-7xl mx-auto px-4 py-12">
-    <h2 class="font-display text-2xl font-bold text-stone-800 mb-6">Trail Areas</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {topAreas.map(area => {
-        const areaTrails = getTrailsForArea(area.slug);
-        const children = getChildAreas(area.slug).filter(a => a.type !== 'access');
-        const totalMiles = areaTrails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
-        return (
-          <a href={`/areas/${area.slug}`} class="group bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:shadow-md hover:border-forest-300 transition-all">
-            <h3 class="font-display text-lg font-bold text-stone-800 group-hover:text-forest-700 transition-colors">{area.name}</h3>
-            <p class="text-stone-600 text-sm mt-2 line-clamp-2">{area.description}</p>
-            <div class="flex items-center gap-4 mt-4 text-xs text-stone-500">
-              {areaTrails.length > 0 && <span>{areaTrails.length} trails</span>}
-              {totalMiles > 0 && <span>{totalMiles.toFixed(1)} mi</span>}
-              {children.length > 0 && <span>{children.length} sections</span>}
-            </div>
-          </a>
-        );
-      })}
+  <!-- What's Here -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <h2 class="font-display text-2xl font-bold text-stone-800 mb-4">What's Here</h2>
+    <p class="text-stone-600 mb-8 leading-relaxed">
+      Cox Mountain sits at a strategic corridor between Durham and Hillsborough, where
+      several historic fords allowed the Fish Dam Road and the old Durham-Hillsborough
+      Coach Road to cross the Eno. The trails here — both official and unofficial — follow
+      paths shaped by geology, industry, and centuries of human movement. Stone foundations,
+      mill ruins, and even abandoned cars hide in these woods.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+        <div class="text-2xl mb-2">🏛️</div>
+        <h3 class="font-display font-bold text-stone-800">Historic Sites</h3>
+        <p class="text-stone-600 text-sm mt-2">
+          Few's Ford, Holden's Mill, Piper-Cox House, the Wilderness Cabin,
+          and stone foundations scattered through the woods.
+        </p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+        <div class="text-2xl mb-2">🥾</div>
+        <h3 class="font-display font-bold text-stone-800">Trails</h3>
+        <p class="text-stone-600 text-sm mt-2">
+          The challenging Cox Mountain loop, Buckquarter Creek Trail, Fanny's Ford Trail,
+          plus an extensive network of unofficial social trails.
+        </p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+        <div class="text-2xl mb-2">🗺️</div>
+        <h3 class="font-display font-bold text-stone-800">Deep History</h3>
+        <p class="text-stone-600 text-sm mt-2">
+          Native American trading paths, colonial-era fords, 19th-century mills,
+          old roadbeds, and a slave cemetery in the woods.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- Quick stats -->
+  <!-- Points of Interest -->
+  <section class="bg-stone-50 py-12">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="font-display text-2xl font-bold text-stone-800 mb-6">Points of Interest</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {coxPois.map(poi => {
+          const icons = {
+            historic: '🏛️', ruins: '🧱', bridge: '🌉', water: '💧', sign: '📋', natural: '🌿'
+          } as any;
+          return (
+            <div class="bg-white rounded-lg border border-stone-200 p-4 flex gap-3">
+              <span class="text-xl flex-shrink-0">{icons[poi.type] || '📍'}</span>
+              <div>
+                <h3 class="font-medium text-stone-800 text-sm">{poi.name}</h3>
+                <p class="text-stone-600 text-xs mt-1 line-clamp-2">{poi.description}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <h2 class="font-display text-2xl font-bold text-stone-800 mb-6">Getting There</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {accessPoints.map(ap => (
+        <div class="bg-white rounded-lg border border-stone-200 p-4">
+          <h3 class="font-medium text-stone-800 text-sm">{ap.name}</h3>
+          <p class="text-stone-600 text-xs mt-1">{ap.description}</p>
+          {ap.restrooms && <span class="inline-block mt-2 text-xs bg-forest-50 text-forest-700 px-2 py-0.5 rounded">🚻 Restrooms</span>}
+        </div>
+      ))}
+    </div>
+    <p class="text-stone-500 text-sm mt-6">
+      <strong>Note:</strong> The swinging bridge is currently closed due to Hurricane Chantal
+      flooding. Eastern trail access from the lower parking lot is limited until repairs are complete.
+    </p>
+  </section>
+
+  <!-- Coming Soon -->
   <section class="bg-forest-800 text-white py-10">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div>
-        <div class="text-3xl font-bold text-forest-300">{topAreas.length}</div>
-        <div class="text-sm text-forest-400 mt-1">Trail Areas</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-forest-300">{trails.length}</div>
-        <div class="text-sm text-forest-400 mt-1">Trails</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-forest-300">{totalMiles.toFixed(0)}</div>
-        <div class="text-sm text-forest-400 mt-1">Total Miles</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-forest-300">5</div>
-        <div class="text-sm text-forest-400 mt-1">Park Systems</div>
-      </div>
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="font-display text-xl font-bold mb-3">More Coming Soon</h2>
+      <p class="text-forest-300 text-sm max-w-xl mx-auto">
+        We're building detailed trail maps, GPS tracks, and deep history writeups for
+        every trail and point of interest in the Cox Mountain area. This is just the beginning.
+      </p>
     </div>
   </section>
 </BaseLayout>
@@ -78,11 +127,11 @@ const totalMiles = trails.reduce((sum, t) => sum + (t.distance_miles || 0), 0);
   document.addEventListener('DOMContentLoaded', () => {
     const mapEl = document.getElementById('hero-map');
     if (!mapEl || typeof L === 'undefined') return;
-    const map = L.map(mapEl, { 
+    const map = L.map(mapEl, {
       zoomControl: false, attributionControl: false,
       dragging: false, scrollWheelZoom: false,
       doubleClickZoom: false, touchZoom: false,
-    }).setView([36.0, -78.94], 12);
+    }).setView([36.077, -79.007], 15);
     L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
     }).addTo(map);

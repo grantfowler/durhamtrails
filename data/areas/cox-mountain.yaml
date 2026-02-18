@@ -2,12 +2,25 @@ name: Cox Mountain
 slug: cox-mountain
 parents:
   - eno-river
-description: 'The most rugged section of the park. Home to the challenging Cox Mountain
-  loop and access to backcountry camping via Fanny''s Ford Trail. Start from the Cole
-  Mill Road parking areas.
-
-  '
+description: >
+  The most rugged section of Eno River State Park, and one of the richest in history.
+  Located at a strategic corridor between Durham and Hillsborough, Cox Mountain sits
+  near several historic fords — Fanny's Ford, Few's Ford, and Cates Ford — where the
+  Fish Dam Road and the old Durham-Hillsborough Coach Road once crossed the Eno.
+  Old roadbeds, mill ruins, stone foundations, and even abandoned cars hide in these
+  woods, layered over centuries of use by Native Americans, colonial settlers, and
+  19th-century industry. Home to the challenging Cox Mountain loop, extensive
+  unofficial trail networks, and access to backcountry camping.
 center:
-- 36.071
-- -78.967
+  - 36.077
+  - -79.007
 default_zoom: 15
+history: >
+  Cox Mountain's trails follow paths shaped by geology and economics over centuries.
+  The Eno's shallow crossings here — Few's Ford, Fanny's Ford, Cates Ford — made this
+  a natural corridor long before European settlement. Native Americans established the
+  Fish Dam Road through here as a trading path. Colonial settlers built mills to harness
+  the creek water (Holden's Mill, William Few's Mill c.1758), which attracted roads,
+  which attracted settlement. The Piper-Cox House and surrounding structures are remnants
+  of that era. Today's trails — both official and unofficial — are desire paths that
+  reveal this layered history.

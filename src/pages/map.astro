@@ -85,7 +85,7 @@ const areaTree = topAreas.map(area => ({
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof L === 'undefined') return;
 
-    const map = L.map('map', { zoomControl: true }).setView([36.0, -78.94], 12);
+    const map = L.map('map', { zoomControl: true }).setView([36.077, -79.007], 15);
     L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
       attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',

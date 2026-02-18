@@ -1,0 +1,13 @@
+name: Upper Parking Lot (Few's Ford)
+slug: cox-mountain-upper-parking
+parents:
+  - cox-mountain
+type: access
+description: >
+  Upper parking area off Cole Mill Road. Best access point for Few's Ford.
+center:
+  - 36.07792
+  - -79.00724
+access_type: parking
+fee: Free
+notes: Best for accessing Few's Ford and the northern trail network.
