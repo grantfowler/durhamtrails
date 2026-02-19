@@ -1,17 +1,19 @@
-name: Holden Mill Ruins
+name: Holden's Mill
 slug: holden-mill-ruins
 areas:
   - eno-river
   - cox-mountain
-lat: 36.0745
-lng: -78.9589
+lat: 36.08355
+lng: -79.02161
 type: ruins
-
 description: >
-  Stone remnants of a 19th-century grist mill along Buckquarter Creek.
-  The foundation walls and fragments of the mill race are still visible.
+  Ruins of a 19th-century grist mill in the northwest corner of the Cox
+  Mountain area. Stone remnants of the mill and fragments of the mill race
+  are still visible. A historic old road runs north from here up to
+  St. Mary's Road, its roadbed still clearly traceable.
+history: >
   One of several mill ruins scattered along the Eno River system.
-
+  The mill harnessed Buckquarter Creek for power. Well-documented history
+  with extensive structural remains.
 trails:
-  - buckquarter-creek-trail
   - buckquarter-creek-trail

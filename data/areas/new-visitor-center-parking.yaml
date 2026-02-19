@@ -1,0 +1,12 @@
+name: New Visitor Center Parking
+slug: new-visitor-center-parking
+parents:
+  - cox-mountain
+type: access
+description: >
+  Parking area for the new Eno River State Park visitor center.
+center:
+  - 36.07550
+  - -79.00594
+access_type: parking
+fee: Free

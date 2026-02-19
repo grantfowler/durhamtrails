@@ -1,0 +1,13 @@
+name: Old Visitor Center / Park Office
+slug: old-visitor-center
+parents:
+  - cox-mountain
+type: access
+description: >
+  Former park visitor center and current park office. Has bathrooms.
+center:
+  - 36.07853
+  - -79.00507
+access_type: parking
+fee: Free
+restrooms: true
