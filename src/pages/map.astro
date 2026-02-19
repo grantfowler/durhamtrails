@@ -149,8 +149,14 @@ const areaTree = topAreas.map(area => ({
           },
           onEachFeature: function(feature, layer) {
             const p = feature.properties;
-            const name = p.name || p.trail || 'Unnamed trail';
+            const trailSlug = p.trail || '';
+            const name = p.name || trailSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Unnamed trail';
             layer.bindTooltip(name, { sticky: true });
+
+            if (trailSlug) {
+              const popupHtml = `<div style="min-width:120px"><strong>${name}</strong><br><a href="/trails/${trailSlug}" style="color:#2d5016;font-size:13px">View trail details →</a></div>`;
+              layer.bindPopup(popupHtml);
+            }
           }
         }).addTo(map);
       })
@@ -170,6 +176,14 @@ const areaTree = topAreas.map(area => ({
       });
       const marker = L.marker([poi.lat, poi.lng], { icon }).addTo(map);
       marker.bindTooltip(poi.name, { direction: 'top', offset: [0, -8] });
+
+      const typeLabel = {
+        historic: 'Historic Site', ruins: 'Ruins', bridge: 'Bridge',
+        water: 'Water', sign: 'Info', natural: 'Natural', campsite: 'Campsite', overlook: 'Overlook',
+      }[poi.type] || poi.type;
+      const desc = poi.description ? `<br><span style="font-size:12px;color:#666">${poi.description.substring(0, 100)}${poi.description.length > 100 ? '...' : ''}</span>` : '';
+      const popupHtml = `<div style="min-width:140px"><strong>${poi.name}</strong><br><span style="font-size:11px;color:#888">${typeLabel}</span>${desc}<br><a href="/pois/${poi.slug}" style="color:#2d5016;font-size:13px">View details →</a></div>`;
+      marker.bindPopup(popupHtml);
     });
 
     // Area expand/collapse + map pan
