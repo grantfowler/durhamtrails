@@ -1,0 +1,24 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        -79.0045128,
+        36.0822029
+      ],
+      [
+        -79.0045358,
+        36.0822837
+      ]
+    ]
+  },
+  "properties": {
+    "segment": "buckquarter-creek-trail-06",
+    "trail": "buckquarter-creek-trail",
+    "osm_way_id": 204567993,
+    "surface": "unknown",
+    "highway": "unknown",
+    "name": ""
+  }
+}
