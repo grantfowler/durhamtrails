@@ -11,3 +11,4 @@ bounds:
 center: [35.99, -78.97]
 default_zoom: 13
 operator: Duke University
+published: false

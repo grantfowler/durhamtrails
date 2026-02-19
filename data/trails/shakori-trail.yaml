@@ -1,0 +1,13 @@
+name: Shakori Trail
+slug: shakori-trail
+areas:
+  - eno-river
+  - cox-mountain
+segments:
+  - shakori-trail-01
+loop: false
+type: official
+difficulty: moderate
+description: >
+  Trail named for the Shakori people, one of the Native American tribes
+  who inhabited the Eno River valley.
