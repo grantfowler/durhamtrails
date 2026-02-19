@@ -11,6 +11,7 @@ export interface Area {
   slug: string;
   parents?: string[];
   type?: 'region' | 'park' | 'section' | 'access';
+  published?: boolean;
   description: string;
   bounds?: [number, number][];
   center?: [number, number];
@@ -70,6 +71,7 @@ export interface Trail {
   history?: string;
   notes?: string;
   osm_relation_id?: number;
+  published?: boolean;
 }
 
 export interface POI {
@@ -103,12 +105,17 @@ let _junctions: Junction[] | null = null;
 let _pois: POI[] | null = null;
 
 export function getAreas(): Area[] {
-  if (!_areas) _areas = loadYamlDir<Area>('areas');
+  if (!_areas) _areas = loadYamlDir<Area>('areas').filter(a => a.published !== false);
   return _areas;
 }
 
+/** Get all areas including unpublished (for internal use) */
+export function getAllAreas(): Area[] {
+  return loadYamlDir<Area>('areas');
+}
+
 export function getTrails(): Trail[] {
-  if (!_trails) _trails = loadYamlDir<Trail>('trails');
+  if (!_trails) _trails = loadYamlDir<Trail>('trails').filter(t => t.published !== false);
   return _trails;
 }
 
