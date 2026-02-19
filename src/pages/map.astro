@@ -86,10 +86,23 @@ const areaTree = topAreas.map(area => ({
     if (typeof L === 'undefined') return;
 
     const map = L.map('map', { zoomControl: true }).setView([36.077, -79.007], 15);
-    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      maxZoom: 17,
-      attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
-    }).addTo(map);
+    // Terrain-only basemap (no roads/labels) so our trail overlay is the focus
+    const baseLayers = {
+      'Terrain': L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_terrain_background/{z}/{x}/{y}{r}.png', {
+        maxZoom: 18,
+        attribution: '© Stamen Design, © OpenMapTiles, © OpenStreetMap contributors',
+      }),
+      'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: '© Esri, Maxar, Earthstar Geographics',
+      }),
+      'Topo (with roads)': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
+      }),
+    };
+    baseLayers['Terrain'].addTo(map);
+    L.control.layers(baseLayers, null, { position: 'topright' }).addTo(map);
 
     // Load trail geometry
     fetch('/trails.geojson')
