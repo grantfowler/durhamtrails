@@ -86,10 +86,57 @@ const areaTree = topAreas.map(area => ({
     if (typeof L === 'undefined') return;
 
     const map = L.map('map', { zoomControl: true }).setView([36.077, -79.007], 15);
-    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      maxZoom: 17,
-      attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
-    }).addTo(map);
+    // Terrain-only basemap (no roads/labels) so our trail overlay is the focus
+    const baseLayers = {
+      'Terrain': L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_terrain_background/{z}/{x}/{y}{r}.png', {
+        maxZoom: 18,
+        attribution: '© Stamen Design, © OpenMapTiles, © OpenStreetMap contributors',
+      }),
+      'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: '© Esri, Maxar, Earthstar Geographics',
+      }),
+      'Topo (with roads)': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '© OpenStreetMap contributors, SRTM | Map: © OpenTopoMap (CC-BY-SA)',
+      }),
+    };
+    baseLayers['Terrain'].addTo(map);
+    L.control.layers(baseLayers, null, { position: 'topright' }).addTo(map);
+
+    // Load trail geometry
+    fetch('/trails.geojson')
+      .then(r => r.json())
+      .then(geojson => {
+        const trailColors = {
+          'cox-mountain-trail': '#2d5016',
+          'buckquarter-creek-trail': '#4a7c28',
+          'fannys-ford-trail': '#6b8e3a',
+          'holdens-mill-trail': '#8b6914',
+          'ridge-trail': '#5a7247',
+          'knight-trail': '#7a9a5a',
+          'fieldstone-trail': '#6b7b5a',
+        };
+
+        L.geoJSON(geojson, {
+          style: function(feature) {
+            const trail = feature.properties.trail || '';
+            const isUnnamed = !trail;
+            return {
+              color: isUnnamed ? '#999' : (trailColors[trail] || '#4a7c28'),
+              weight: isUnnamed ? 1.5 : 3,
+              opacity: isUnnamed ? 0.5 : 0.8,
+              dashArray: isUnnamed ? '4 4' : (feature.properties.informal === 'yes' ? '6 4' : null),
+            };
+          },
+          onEachFeature: function(feature, layer) {
+            const p = feature.properties;
+            const name = p.name || p.trail || 'Unnamed trail';
+            layer.bindTooltip(name, { sticky: true });
+          }
+        }).addTo(map);
+      })
+      .catch(err => console.warn('Could not load trail geometry:', err));
 
     const poiIcons = {
       historic: '🏛️', natural: '🌿', bridge: '🌉',
