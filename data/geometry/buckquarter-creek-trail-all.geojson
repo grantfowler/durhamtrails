@@ -1,0 +1,1013 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0071536,
+            36.0790494
+          ],
+          [
+            -79.0070747,
+            36.0790274
+          ],
+          [
+            -79.0070253,
+            36.0790277
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-01",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 143778823,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0070253,
+            36.0790277
+          ],
+          [
+            -79.0069901,
+            36.07906
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-02",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567976,
+        "surface": "wood",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0069901,
+            36.07906
+          ],
+          [
+            -79.0069672,
+            36.0790898
+          ],
+          [
+            -79.0069304,
+            36.0791926
+          ],
+          [
+            -79.0068653,
+            36.0792495
+          ],
+          [
+            -79.0066712,
+            36.0793123
+          ],
+          [
+            -79.0065407,
+            36.0793412
+          ],
+          [
+            -79.0063729,
+            36.0793461
+          ],
+          [
+            -79.0061154,
+            36.079481
+          ],
+          [
+            -79.0059251,
+            36.0796065
+          ],
+          [
+            -79.005752,
+            36.0797557
+          ],
+          [
+            -79.0056136,
+            36.0799352
+          ],
+          [
+            -79.0055358,
+            36.0800866
+          ],
+          [
+            -79.0053952,
+            36.0802164
+          ],
+          [
+            -79.0052069,
+            36.0803578
+          ],
+          [
+            -79.0050351,
+            36.0804991
+          ],
+          [
+            -79.0048664,
+            36.0806558
+          ],
+          [
+            -79.0047532,
+            36.080781
+          ],
+          [
+            -79.0046178,
+            36.0809297
+          ],
+          [
+            -79.0045135,
+            36.0810673
+          ],
+          [
+            -79.0044913,
+            36.0812871
+          ],
+          [
+            -79.0044928,
+            36.0814437
+          ],
+          [
+            -79.0044622,
+            36.0814932
+          ],
+          [
+            -79.0044524,
+            36.0815962
+          ],
+          [
+            -79.004438,
+            36.0817732
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-03",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568003,
+        "surface": "ground",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.004438,
+            36.0817732
+          ],
+          [
+            -79.0044716,
+            36.0818498
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-04",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567980,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0044716,
+            36.0818498
+          ],
+          [
+            -79.0045009,
+            36.082009
+          ],
+          [
+            -79.0045026,
+            36.0820881
+          ],
+          [
+            -79.0045128,
+            36.0822029
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-05",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568021,
+        "surface": "ground",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0045128,
+            36.0822029
+          ],
+          [
+            -79.0045358,
+            36.0822837
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-06",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567993,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0045358,
+            36.0822837
+          ],
+          [
+            -79.0045921,
+            36.0823963
+          ],
+          [
+            -79.0045989,
+            36.0824806
+          ],
+          [
+            -79.0046716,
+            36.0826276
+          ],
+          [
+            -79.0046778,
+            36.0826821
+          ],
+          [
+            -79.0046422,
+            36.0827899
+          ],
+          [
+            -79.0046035,
+            36.0828771
+          ],
+          [
+            -79.0045966,
+            36.0829477
+          ],
+          [
+            -79.0046194,
+            36.0831755
+          ],
+          [
+            -79.0045579,
+            36.083351
+          ],
+          [
+            -79.0045807,
+            36.0835173
+          ],
+          [
+            -79.0047011,
+            36.0836511
+          ],
+          [
+            -79.0048508,
+            36.0838219
+          ],
+          [
+            -79.0049771,
+            36.0839154
+          ],
+          [
+            -79.0051221,
+            36.08403
+          ],
+          [
+            -79.005191,
+            36.0841045
+          ],
+          [
+            -79.0052497,
+            36.0841777
+          ],
+          [
+            -79.005284,
+            36.084244
+          ],
+          [
+            -79.0053012,
+            36.0843173
+          ],
+          [
+            -79.0052804,
+            36.0843955
+          ],
+          [
+            -79.0051515,
+            36.0845728
+          ],
+          [
+            -79.0050501,
+            36.0846835
+          ],
+          [
+            -79.0050384,
+            36.0848049
+          ],
+          [
+            -79.0050358,
+            36.0849135
+          ],
+          [
+            -79.0052427,
+            36.0850402
+          ],
+          [
+            -79.0054806,
+            36.0852268
+          ],
+          [
+            -79.0055632,
+            36.0853018
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-07",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568014,
+        "surface": "ground",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0055632,
+            36.0853018
+          ],
+          [
+            -79.0058298,
+            36.0854319
+          ],
+          [
+            -79.0058972,
+            36.0854686
+          ],
+          [
+            -79.0059916,
+            36.0854729
+          ],
+          [
+            -79.0062141,
+            36.0854159
+          ],
+          [
+            -79.0063145,
+            36.0853763
+          ],
+          [
+            -79.0064101,
+            36.0853347
+          ],
+          [
+            -79.0064934,
+            36.0853159
+          ],
+          [
+            -79.0066157,
+            36.0853001
+          ],
+          [
+            -79.0067453,
+            36.0853721
+          ],
+          [
+            -79.0067953,
+            36.0854585
+          ],
+          [
+            -79.0068799,
+            36.0855468
+          ],
+          [
+            -79.0069245,
+            36.0856293
+          ],
+          [
+            -79.0069997,
+            36.085654
+          ],
+          [
+            -79.0070701,
+            36.0856901
+          ],
+          [
+            -79.0071746,
+            36.0857052
+          ],
+          [
+            -79.0073155,
+            36.0856863
+          ],
+          [
+            -79.0073907,
+            36.0856037
+          ],
+          [
+            -79.00751,
+            36.0855857
+          ],
+          [
+            -79.0075847,
+            36.0856433
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-08",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568000,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0075847,
+            36.0856433
+          ],
+          [
+            -79.0077148,
+            36.0856616
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-09",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567971,
+        "surface": "ground",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0077148,
+            36.0856616
+          ],
+          [
+            -79.0078251,
+            36.0856389
+          ],
+          [
+            -79.0078803,
+            36.0855828
+          ],
+          [
+            -79.0079402,
+            36.0855458
+          ],
+          [
+            -79.0080541,
+            36.0854715
+          ],
+          [
+            -79.0081003,
+            36.0853706
+          ],
+          [
+            -79.0081058,
+            36.0853595
+          ],
+          [
+            -79.0081132,
+            36.0853434
+          ],
+          [
+            -79.0081477,
+            36.0852178
+          ],
+          [
+            -79.0082019,
+            36.0849345
+          ],
+          [
+            -79.008285,
+            36.0848494
+          ],
+          [
+            -79.0083519,
+            36.0848219
+          ],
+          [
+            -79.0083857,
+            36.0847582
+          ],
+          [
+            -79.0084749,
+            36.0846135
+          ],
+          [
+            -79.0085093,
+            36.0844317
+          ],
+          [
+            -79.0084911,
+            36.0842841
+          ],
+          [
+            -79.0084631,
+            36.0841587
+          ],
+          [
+            -79.0084237,
+            36.0840363
+          ],
+          [
+            -79.0083817,
+            36.0839396
+          ],
+          [
+            -79.0083375,
+            36.0838462
+          ],
+          [
+            -79.008262,
+            36.0837742
+          ],
+          [
+            -79.0081255,
+            36.0837297
+          ],
+          [
+            -79.0079786,
+            36.0836735
+          ],
+          [
+            -79.0078952,
+            36.0836242
+          ],
+          [
+            -79.0078446,
+            36.0836178
+          ],
+          [
+            -79.0076739,
+            36.0835685
+          ],
+          [
+            -79.0074104,
+            36.0834937
+          ],
+          [
+            -79.0073274,
+            36.0834885
+          ],
+          [
+            -79.0071786,
+            36.0834053
+          ],
+          [
+            -79.0070655,
+            36.0833733
+          ],
+          [
+            -79.0069199,
+            36.0833224
+          ],
+          [
+            -79.0067867,
+            36.0832492
+          ],
+          [
+            -79.0064929,
+            36.0831897
+          ],
+          [
+            -79.0064452,
+            36.0831194
+          ],
+          [
+            -79.0063327,
+            36.0830839
+          ],
+          [
+            -79.0058306,
+            36.082999
+          ],
+          [
+            -79.0056034,
+            36.0829697
+          ],
+          [
+            -79.0055351,
+            36.0829541
+          ],
+          [
+            -79.0054476,
+            36.0829342
+          ],
+          [
+            -79.0052906,
+            36.0828828
+          ],
+          [
+            -79.0051753,
+            36.0828038
+          ],
+          [
+            -79.0051123,
+            36.0827229
+          ],
+          [
+            -79.0050419,
+            36.0826074
+          ],
+          [
+            -79.0050153,
+            36.0824689
+          ],
+          [
+            -79.0049167,
+            36.0823224
+          ],
+          [
+            -79.0048288,
+            36.0822265
+          ],
+          [
+            -79.0048181,
+            36.0820747
+          ],
+          [
+            -79.0048581,
+            36.0819388
+          ],
+          [
+            -79.0048856,
+            36.0818753
+          ],
+          [
+            -79.004886,
+            36.0818338
+          ],
+          [
+            -79.0048384,
+            36.0815957
+          ],
+          [
+            -79.004873,
+            36.0814532
+          ],
+          [
+            -79.0048863,
+            36.0812561
+          ],
+          [
+            -79.0050062,
+            36.0811162
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-10",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568037,
+        "surface": "ground",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0050062,
+            36.0811162
+          ],
+          [
+            -79.0050228,
+            36.0810407
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-11",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567986,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0050228,
+            36.0810407
+          ],
+          [
+            -79.0050408,
+            36.0809538
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-12",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567987,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0050408,
+            36.0809538
+          ],
+          [
+            -79.0050728,
+            36.0808459
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-13",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567992,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0050728,
+            36.0808459
+          ],
+          [
+            -79.0051074,
+            36.0807833
+          ],
+          [
+            -79.0052339,
+            36.0806541
+          ],
+          [
+            -79.0052875,
+            36.0806096
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-14",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568026,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0052875,
+            36.0806096
+          ],
+          [
+            -79.0053964,
+            36.0805129
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-15",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567983,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0053964,
+            36.0805129
+          ],
+          [
+            -79.0054763,
+            36.0804343
+          ],
+          [
+            -79.0055283,
+            36.0803731
+          ],
+          [
+            -79.0056801,
+            36.0802292
+          ],
+          [
+            -79.0058119,
+            36.0801933
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-16",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568030,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0058119,
+            36.0801933
+          ],
+          [
+            -79.0058586,
+            36.080168
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-17",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567978,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0058586,
+            36.080168
+          ],
+          [
+            -79.0059172,
+            36.080084
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-18",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567981,
+        "surface": "wood",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0059172,
+            36.080084
+          ],
+          [
+            -79.0060384,
+            36.0799722
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-19",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204567995,
+        "surface": "unknown",
+        "highway": "unknown",
+        "name": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -79.0060384,
+            36.0799722
+          ],
+          [
+            -79.0060863,
+            36.0797751
+          ],
+          [
+            -79.0061396,
+            36.0797418
+          ],
+          [
+            -79.0061649,
+            36.0797005
+          ],
+          [
+            -79.0062408,
+            36.0796911
+          ],
+          [
+            -79.0063114,
+            36.0796206
+          ],
+          [
+            -79.0063394,
+            36.0794914
+          ],
+          [
+            -79.006402,
+            36.0794101
+          ],
+          [
+            -79.0065407,
+            36.0793412
+          ]
+        ]
+      },
+      "properties": {
+        "segment": "buckquarter-creek-trail-20",
+        "trail": "buckquarter-creek-trail",
+        "osm_way_id": 204568055,
+        "surface": "unknown",
+        "highway": "footway",
+        "name": "Buckquarter Creek Trail"
+      }
+    }
+  ]
+}

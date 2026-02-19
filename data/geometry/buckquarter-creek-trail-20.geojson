@@ -1,0 +1,52 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        -79.0060384,
+        36.0799722
+      ],
+      [
+        -79.0060863,
+        36.0797751
+      ],
+      [
+        -79.0061396,
+        36.0797418
+      ],
+      [
+        -79.0061649,
+        36.0797005
+      ],
+      [
+        -79.0062408,
+        36.0796911
+      ],
+      [
+        -79.0063114,
+        36.0796206
+      ],
+      [
+        -79.0063394,
+        36.0794914
+      ],
+      [
+        -79.006402,
+        36.0794101
+      ],
+      [
+        -79.0065407,
+        36.0793412
+      ]
+    ]
+  },
+  "properties": {
+    "segment": "buckquarter-creek-trail-20",
+    "trail": "buckquarter-creek-trail",
+    "osm_way_id": 204568055,
+    "surface": "unknown",
+    "highway": "footway",
+    "name": "Buckquarter Creek Trail"
+  }
+}

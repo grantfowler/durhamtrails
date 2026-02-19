@@ -1,0 +1,24 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        -79.0049708,
+        36.0872727
+      ],
+      [
+        -79.0049824,
+        36.0872944
+      ]
+    ]
+  },
+  "properties": {
+    "segment": "ridge-trail-02",
+    "trail": "ridge-trail",
+    "osm_way_id": 204568069,
+    "surface": "unknown",
+    "highway": "footway",
+    "name": "Ridge Trail"
+  }
+}

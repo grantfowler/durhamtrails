@@ -1,0 +1,32 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        -79.0073302,
+        36.0749585
+      ],
+      [
+        -79.0072728,
+        36.0749396
+      ],
+      [
+        -79.0069489,
+        36.0749761
+      ],
+      [
+        -79.0068851,
+        36.0749724
+      ]
+    ]
+  },
+  "properties": {
+    "segment": "cox-mountain-trail-05",
+    "trail": "cox-mountain-trail",
+    "osm_way_id": 830425107,
+    "surface": "unknown",
+    "highway": "unknown",
+    "name": ""
+  }
+}
