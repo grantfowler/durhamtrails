@@ -205,12 +205,21 @@ const difficultyColors: Record<string, string> = {
         <div class="bg-white border border-stone-200 rounded-xl p-5">
           <h3 class="font-display font-bold text-stone-800 mb-3">Points of Interest</h3>
           <div class="space-y-3">
-            {pois.map(poi => (
-              <div class="text-sm">
-                <div class="font-medium text-stone-800">{poi.name}</div>
-                <div class="text-stone-500 text-xs">{poi.type}</div>
-              </div>
-            ))}
+            {pois.map(poi => {
+              const poiIcons = {
+                historic: '🏛️', natural: '🌿', bridge: '🌉',
+                campsite: '⛺', overlook: '👁️', ruins: '🧱', water: '💧', sign: '📋',
+              } as any;
+              return (
+                <a href={`/pois/${poi.slug}`} class="flex items-center gap-2 text-sm hover:text-forest-700 transition-colors">
+                  <span>{poiIcons[poi.type] || '📍'}</span>
+                  <div>
+                    <div class="font-medium text-stone-800">{poi.name}</div>
+                    <div class="text-stone-500 text-xs">{poi.type}</div>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       )}
@@ -229,16 +238,74 @@ const difficultyColors: Record<string, string> = {
   </div>
 </BaseLayout>
 
-<script is:inline>
+<script is:inline define:vars={{ pois }}>
   document.addEventListener('DOMContentLoaded', () => {
     const mapEl = document.getElementById('area-map');
     if (!mapEl || typeof L === 'undefined') return;
     const center = JSON.parse(mapEl.dataset.center);
     const zoom = parseInt(mapEl.dataset.zoom);
     const map = L.map(mapEl).setView(center, zoom);
-    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      maxZoom: 17,
-      attribution: '© OpenStreetMap contributors',
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: '© Esri, Maxar, Earthstar Geographics',
     }).addTo(map);
+
+    // Load trail geometry
+    fetch('/trails.geojson')
+      .then(r => r.json())
+      .then(geojson => {
+        const trailColors = {
+          'cox-mountain-trail': '#e63946',
+          'buckquarter-creek-trail': '#457b9d',
+          'fannys-ford-trail': '#2a9d8f',
+          'holdens-mill-trail': '#e9c46a',
+          'ridge-trail': '#f4a261',
+          'knight-trail': '#264653',
+          'fieldstone-trail': '#6a4c93',
+          'shakori-trail': '#1d3557',
+        };
+        L.geoJSON(geojson, {
+          style: function(feature) {
+            const trail = feature.properties.trail || '';
+            const isUnnamed = !trail;
+            return {
+              color: isUnnamed ? '#ff6b6b' : (trailColors[trail] || '#4a7c28'),
+              weight: isUnnamed ? 2 : 3,
+              opacity: isUnnamed ? 0.5 : 0.8,
+              dashArray: isUnnamed ? '6 4' : null,
+            };
+          },
+          onEachFeature: function(feature, layer) {
+            const p = feature.properties;
+            const trailSlug = p.trail || '';
+            const name = p.name || trailSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Unnamed trail';
+            if (trailSlug) {
+              layer.bindPopup('<strong>' + name + '</strong><br><a href="/trails/' + trailSlug + '" style="color:#2d5016;font-size:13px">View trail →</a>');
+            }
+            layer.bindTooltip(name, { sticky: true });
+          }
+        }).addTo(map);
+      }).catch(() => {});
+
+    // Add POI markers
+    const poiIcons = {
+      historic: '🏛️', natural: '🌿', bridge: '🌉',
+      campsite: '⛺', overlook: '👁️', ruins: '🧱', water: '💧', sign: '📋',
+    };
+    pois.forEach(poi => {
+      const icon = L.divIcon({
+        html: '<span class="text-lg">' + (poiIcons[poi.type] || '📍') + '</span>',
+        className: 'poi-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+      });
+      const marker = L.marker([poi.lat, poi.lng], { icon }).addTo(map);
+      marker.bindTooltip(poi.name, { direction: 'top', offset: [0, -8] });
+      marker.bindPopup('<strong>' + poi.name + '</strong><br><a href="/pois/' + poi.slug + '" style="color:#2d5016;font-size:13px">View details →</a>');
+    });
   });
 </script>
+
+<style>
+  .poi-marker { background: none !important; border: none !important; }
+</style>
