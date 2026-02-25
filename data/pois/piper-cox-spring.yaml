@@ -6,6 +6,7 @@ areas:
 lat: 36.07854
 lng: -79.00633
 type: water
+tags: [water-feature, spring]
 description: >
   Natural spring near the Piper-Cox House. Historically provided water
   for the homestead.

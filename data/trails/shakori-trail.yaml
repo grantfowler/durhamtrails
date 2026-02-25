@@ -8,6 +8,8 @@ segments:
 loop: false
 type: official
 difficulty: moderate
+surface: dirt
+tags: [historic, scenic-views]
 description: >
   Trail named for the Shakori people, one of the Native American tribes
   who inhabited the Eno River valley.

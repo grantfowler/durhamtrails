@@ -9,6 +9,8 @@ loop: false
 
 type: official
 difficulty: easy
+surface: dirt
+tags: [creek-crossing, bottomland]
 blaze: orange circle
 
 distance_miles: 1.4
