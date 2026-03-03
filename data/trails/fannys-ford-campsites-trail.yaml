@@ -7,5 +7,7 @@ segments: []
 loop: false
 type: official
 difficulty: easy
+surface: dirt
+tags: [camping, creek-crossing]
 description: >
   Short trail connecting to the backcountry campsites near Fanny's Ford.

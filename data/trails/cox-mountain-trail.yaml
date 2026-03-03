@@ -10,6 +10,8 @@ loop: true
 
 type: official
 difficulty: moderate
+surface: rock
+tags: [rocky, scenic-views, summit]
 blaze: red circle
 
 # Computed from segments (cached)

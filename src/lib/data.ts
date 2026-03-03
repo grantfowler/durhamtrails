@@ -62,8 +62,10 @@ export interface Trail {
   areas: string[];
   segments: string[];
   loop: boolean;
-  type: 'official' | 'unofficial' | 'greenway' | 'fire-road' | 'connector';
+  type: 'official' | 'unofficial' | 'greenway' | 'fire-road' | 'connector' | 'social' | 'bushwhack';
   difficulty?: 'easy' | 'moderate' | 'difficult';
+  surface?: string;
+  tags?: string[];
   blaze?: string;
   distance_miles?: number;
   elevation_gain_ft?: number;
@@ -81,6 +83,7 @@ export interface POI {
   lat: number;
   lng: number;
   type: string;
+  tags?: string[];
   description: string;
   history?: string;
   trails?: string[];
